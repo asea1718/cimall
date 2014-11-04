@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>购物车-3订单成功</title>
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+<style type="text/css">
+	#tj-tip{text-align: center;color: #CC3333;font-size: 14px;font-weight: bold;}
+	#ti-money{margin-left: 250px;}
+	#ti-dd{float: left;}
+	#ti-zaixian{float: right;padding-right: 15px;}
+	.ti-zxfh{margin: 0 auto;
+			width: 984px;
+			height: 40px;
+			background: #34bcea;
+			line-height: 40px;
+			color: #fff;
+			font-size: 14px;
+			padding-left: 16px;
+	}
+	
+</style>
+<body>
+<?php $this->load->view('_top.html');?>
+ 
+
+<div class="zxfh-g">
+	<div class="zxfh1" id="tj-tip">
+		<span>您的订单已经提交成功！</span>
+	</div>
+
+	<div class="ti-zxfh">
+		<p>
+			<span id="ti-dd">订单号：1254878555</span>	<span id="ti-money">订单金额：￥200.85元</span><span id="ti-zaixian">支付方式：在线支付</span>	
+		</p>
+	</div>
+</div>
+
+
+ <?php $this->load->view('_footer.html');?>

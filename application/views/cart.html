@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>购物车-2</title>
+<script type="text/javascript" src="<?php echo base_url().MJS;?>jquery-1.7.2.min.js" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+
+<script type="text/javascript" src="<?php echo base_url().MJS;?>Calculation.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+  //一开始就统计勾选的总价格
+  GetCount();
+  //jquery特效制作复选框全选反选取消(无插件)
+  // 全选        
+  $(".allselect").click(function () {
+    $(".gwc_tb2 input[info=newslist]").each(function () {
+      $(this).attr("checked", true);
+      // $(this).next().css({ "background-color": "#3366cc", "color": "#ffffff" });
+    });
+    GetCount();
+  });
+
+  //反选
+  $("#invert").click(function () {
+    $(".gwc_tb2 input[info=newslist]").each(function () {
+      if ($(this).attr("checked")) {
+        $(this).attr("checked", false);
+        //$(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+      } else {
+        $(this).attr("checked", true);
+        //$(this).next().css({ "background-color": "#3366cc", "color": "#000000" });
+      } 
+    });
+    GetCount();
+  });
+
+  //取消
+  $("#cancel").click(function () {
+    $(".gwc_tb2 input[info=newslist]").each(function () {
+      $(this).attr("checked", false);
+      // $(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+    });
+    GetCount();
+  });
+
+  // 所有复选(:checkbox)框点击事件
+  $(".gwc_tb2 input[info=newslist]").click(function () {
+    if ($(this).attr("checked")) {
+      //$(this).next().css({ "background-color": "#3366cc", "color": "#ffffff" });
+    } else {
+      // $(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+    }
+  });
+
+  // 输出
+  $(".gwc_tb2 input[info=newslist]").click(function () {
+    // $("#total2").html() = GetCount($(this));
+    GetCount();
+    //alert(conts);
+  });
+});
+//******************
+//
+function GetCount() {
+  var conts = 0;
+  var aa = 0;
+  $(".gwc_tb2 input[info=newslist]").each(function () {
+    if ($(this).attr("checked")) {
+      for (var i = 0; i < $(this).length; i++) {   
+        conts += parseFloat($(this).attr('data'));  //parseFloat      
+        aa += 1;
+      }
+    }
+  });
+  $("#shuliang").text(aa);
+  $("#zong1").html((conts).toFixed(2));
+  $("#jz1").css("display", "none");
+  $("#jz2").css("display", "block");
+}
+
+/***********************************************/
+function addNum(id,pid){
+    var t = $("#text_box"+id); 
+    //if(t.val() <= 1) return false;  
+    t.val(parseInt(t.val()) + 1);
+    delNum('add',pid); 
+    setTotal(t, id); GetCount();   
+  }
+
+  function decNum(id,pid){
+    var t = $("#text_box"+id);  
+    if(t.val() <= 1) return false;  
+    t.val(parseInt(t.val()) - 1);
+    delNum('dec',pid);
+    setTotal(t, id); GetCount();     
+  }
+  /***点击增加/减少按钮共同部分操作购物车***/
+  function delNum(action,pid){
+    var url = "<?php echo site_url('cart/delNum');?>";
+    $.post(
+      url,
+      {action:action,pid:pid}
+      /*function(data){
+        alert('action');
+      }*/
+      );
+  }
+
+  /**
+   * 鼠标离开input
+   */
+  function blurNum(id,pid){        
+    if($("#text_box"+id).val() < 1 || isNaN($("#text_box"+id).val())){
+      var geturl = "<?php echo site_url('cart/getOne');?>";
+      var num = $("#text_box"+id).val();
+      $.post(
+        geturl,
+        {pid:pid,num:num},
+        function(data){
+          if(data){
+            $("#text_box"+id).val(data);
+            var t = $("#text_box"+id); 
+            setTotal(t, id); GetCount();
+            //alert(111);
+          }
+        },
+        'text');
+    }else if(!isNaN($("#text_box"+id).val())){
+      var updateurl = "<?php echo site_url('cart/updateOne');?>";
+      var num = $("#text_box"+id).val();
+      $.post(
+        updateurl,
+        {pid:pid,num:num},
+        function(data){
+          if(data){
+            $("#text_box"+id).val(data);
+            var t = $("#text_box"+id); 
+            setTotal(t, id); GetCount();
+          }
+        },
+        'text');
+    }
+  }
+
+  function setTotal(t, id) {    
+    var price = $("#sprice"+id).text(); 
+    $("#total"+id).html((parseInt(t.val()) * price).toFixed(2));
+    $("#newslist-"+id).attr('data',parseInt(t.val()) * price);    
+  }
+
+  //删除单个购物车
+  function delOne(pid,tbid){
+    //alert(111);
+    var url = "<?php echo site_url('cart/delOne');?>";
+    $.post(
+      url,
+      {pid:pid},
+      function(data){
+        if(data == 1){
+          $("#item_tb"+tbid).remove();
+          GetCount();
+        }else{
+          alert('删除失败');
+        }
+      },
+      "text");
+  }
+
+  /***提交订单按钮**/
+  function toPay(){
+    $('#topay_form').submit();
+  }
+ 
+</script>
+</head>
+<body>
+
+ <?php $this->load->view('_top.html');?>
+
+<div class="gwc" style=" margin:auto;">
+  <table cellpadding="0" cellspacing="0" class="gwc_tb1">
+    <tr>
+      <td class="tb1_td1"><input id="Checkbox1" type="checkbox"  class="allselect"/></td>
+      <td class="tb1_td1">全选</td>
+      <td class="tb1_td3">商品</td>
+      <td class="tb1_td4">单价</td>
+      <td class="tb1_td5">数量</td>
+      <td class="tb1_td6">总价</td>
+      <td class="tb1_td7">操作</td>
+    </tr>
+  </table> 
+  <form action="<?php echo site_url('cart/toPay');?>" method="post" id="topay_form">
+  <?php if(!empty($allitems)){$i=0; foreach($allitems as $item){ $i++; ?>
+  <table cellpadding="0" cellspacing="0" class="gwc_tb2" id="item_tb<?php echo $i;?>">
+    <tr>
+      <td class="tb2_td1"><input type="checkbox" value="<?php echo $item['id'];?>" checked=checked name="p_id[]" info="newslist" data="<?php echo $item['price']*$item['num'];?>" id="newslist-<?php echo $i;?>" /></td>
+      <td class="tb2_td2"><a href="<?php echo site_url('good/single').'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><img src="<?php echo $item['img'];?>"/></a></td>
+      <td class="tb2_td3"><a href="<?php echo site_url('good/single').'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><?php echo $item['name'];?></a></td>
+      <td class="tb1_td4"><span id="sprice<?php echo $i;?>"><?php echo $item['price'];?></span></td>
+      <td class="tb1_td5">
+        <input id="min<?php echo $i;?>" name="" onclick="decNum(<?php echo $i;?>,<?php echo $item['id'];?>)" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+        <input id="text_box<?php echo $i;?>" name="" type="text" onblur="blurNum(<?php echo $i;?>,<?php echo $item['id'];?>)" value="<?php echo $item['num'];?>" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+        <input id="add<?php echo $i;?>" onclick="addNum(<?php echo $i;?>,<?php echo $item['id'];?>)" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+      </td>
+      <td class="tb1_td6"><label id="total<?php echo $i;?>" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;"><?php echo $item['price']*$item['num'];?></label></td>
+      <td class="tb1_td7"><a href="javascript:;" onclick="delOne(<?php echo $item['id'];?>,<?php echo $i;?>)">删除</a></td>
+    </tr>
+  </table>
+  <?php }} ?>    
+  <!---总数---->  
+  <table cellpadding="0" cellspacing="0" class="gwc_tb3">
+    <tr>
+      <td class="tb1_td1"><input id="checkAll" class="allselect" type="checkbox" /></td>
+      <td class="tb1_td1">全选</td>
+      <td class="tb3_td1">
+        <input id="invert" type="checkbox" />反选
+        <input id="cancel" type="checkbox" />取消
+      </td>
+      <td class="tb3_td2">已选商品 <label id="shuliang" style="color:#ff5500;font-size:14px; font-weight:bold;">0</label> 件</td>
+      <td class="tb3_td3">合计(不含运费):<span>￥</span><span style=" color:#ff5500;"><label id="zong1" style="color:#ff5500;font-size:14px; font-weight:bold;"></label></span></td>
+      <td class="tb3_td4"><span id="jz1" style="display:none;">结算</span><a href="javascript:;" onclick="toPay()" style=" display:block;"  class="jz2" id="jz2">结算</a></td>
+    </tr>
+  </table>
+  </form>
+</div>
+
+
+<?php $this->load->view('_footer.html');?>

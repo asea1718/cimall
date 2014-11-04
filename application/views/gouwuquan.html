@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<title>购物券</title>
+</head>
+<body>
+
+ <?php $this->load->view('_top.html');?>
+<script type="text/javascript" src="js/tuijian.js"></script>
+
+<div class="jfdh">
+<div class="jfdh1">
+<h1>购物券</h1>
+<a onclick="showid_zzjs_net('xm2');" style="cursor:pointer;" ><img src="<?php echo base_url().MIMG;?>tjgwq1.jpg"></a>
+</div>
+<div id="xm2">  
+<div class="xm2">
+
+<form>
+请输入购物券号码
+<input type="text" class="xm2-txt">
+
+<input type="submit" value=""class="xm2-yanzhen">
+</form>
+
+
+</div>
+</div>
+<div class="jfdh2">
+
+<ul>
+<li><span>编号：123456789</span><span>类别：积分券</span><span>使用时间：不限时</span><span>金额：5元</span></li>
+<li><span>编号：123456789</span><span>类别：积分券</span><span>使用时间：不限时</span><span>金额：5元</span></li>
+<li><span>编号：123456789</span><span>类别：积分券</span><span>使用时间：不限时</span><span>金额：5元</span></li>
+<li><span>编号：123456789</span><span>类别：积分券</span><span>使用时间：不限时</span><span>金额：5元</span></li>
+</ul>
+
+</div>
+</div>
+
+<?php $this->load->view('_footer.html');?>

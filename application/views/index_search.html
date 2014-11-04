@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>搜索店铺 - 邑客社区网购超市</title>
+<meta name="description" content="邑客社区网购超市" />
+<meta name="keywords" content="邑客社区网购超市" />
+
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" src="http://www.shjhyy.com/includes/libraries/javascript/ecmall.js" charset="utf-8"></script>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+<script type="text/javascript">
+//<!CDATA[
+$(function (){
+    var order = '';
+    var arrow = '';
+
+    switch (order){
+        case 'credit_value desc' : order = '';
+        arrow = '↓';
+        break;
+        default : order = 'credit_value desc';
+    }
+    $('#credit_grade').html('信用度' + arrow);
+    $('#credit_grade').click(function(){query('order', order);return false;});
+}
+);
+function query(name, value){
+    $("input[name='"+name+"']").val(value);
+    $('#search').submit();
+}
+
+//]]>
+</script>
+<div class="top-gg">
+    <div class="ad_banner" area="banner" widget_type="area">
+    
+<div id="_widget_407" name="image_ad" widget_type="widget" class="widget">
+<div class="ad_image">
+    <a href="" target="_blank"><img src="<?php echo base_url().MIMG;?>gg.jpg" /></a>
+  </div>
+</div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="top1">
+  <div class="logo">
+    <a href="/"><img src="<?php echo base_url().MIMG;?>logo.jpg"></a>
+  </div>
+  <div class="logo-r">
+    <div class="logo-r-L"onMouseDown="ISL_GoUp()" onMouseUp="ISL_StopUp()" onMouseOut="ISL_StopUp()">
+    </div>
+  <script language="javascript" type="text/javascript">
+  /*选项卡*/
+  function change_con(ww,num,hh)
+  {
+    var obj=ww
+    for(var ii=1;ii<=num;ii++)
+    {
+     document.getElementById(obj+ii).className=obj+"_off";
+     document.getElementById(obj+ii+ii).style.display="none";
+    }
+     document.getElementById(obj+hh).className=obj+"_on";
+     document.getElementById(obj+hh+hh).style.display="";
+  }
+  </script>
+    <div class="logo-r-M">
+      <div class="Cont" id="ISL_Cont">
+        <div class="ScrCont">
+          <div id="List1">
+            <ul>
+            <li class="bs" onclick="change_con('jj',6,1)"><p class="jj_on" id="jj1" ><span>宝山</span></p></li>
+            <li class="pd" onclick="change_con('jj',6,2)"><p class="jj_off" id="jj2" ><span>浦东</span></p></li>
+            <li class="hk" onclick="change_con('jj',6,3)"><p class="jj_off" id="jj3" ><span>虹口</span></p></li>
+            <li class="xh" onclick="change_con('jj',6,4)"><p class="jj_off" id="jj4" ><span>徐汇</span></p></li>
+            <li class="cn" onclick="change_con('jj',6,5)"><p class="jj_off" id="jj5" ><span>长宁</span></p></li>
+            <li class="yp" onclick="change_con('jj',6,6)"><p class="jj_off" id="jj6" ><span>杨浦</span></p></li>
+            </ul>
+          </div>
+          <div id="List2"></div>
+        </div>
+      </div>
+    </div> 
+    <div class="logo-r-R"onmousedown="ISL_GoDown()" onMouseUp="ISL_StopDown()" onMouseOut="ISL_StopDown()"></div>
+  </div> 
+  <script type="text/javascript" src="styles/js/nav.js" charset="utf-8"></script>
+</div> 
+<script type="text/javascript">
+  function search(){
+    
+    var kw = $.trim($('#destoon_kw').val());      
+    if(kw == '请输入您所在的小区地址' || kw == '')
+      return false;
+    else{
+      var gourl = "<?php echo site_url('store/search');?>"+'/'+decodeURIComponent(kw);
+      window.location.href = gourl;        
+    }       
+   
+  }
+</script>
+<div class="top2">
+  <div class="ditu-so">
+    <div class="ditu-so1">
+      
+        <input name="keyword" id="destoon_kw" type="text" class="dituu" value="请输入您所在的小区地址" onfocus="if(this.value=='请输入您所在的小区地址') this.value='';" onkeyup="STip(this.value);"  onkeydown="javascript:if(event.keyCode==13)search();"/>		
+		   <button class="qued searchbutton"  onclick="search()"></button> 
+      
+      <div class="ditu-anniu">
+        <a href=""><img src="<?php echo base_url().MIMG;?>souso-anniu.jpg"></a>
+      </div>
+    </div>
+  </div> 
+
+
+<div class="ditu-sou"id="jj11" >
+<ul>
+  <?php for($i=0;$i<7;$i++){?>
+  <li><div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村231号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+  </li>
+  <?php }?>
+
+</ul>
+</div>
+<div class="ditu-sou"id="jj22" style="display:none">
+<ul>
+  <?php for($i=0;$i<7;$i++){?>
+  <li><div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村232号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+
+  </li>
+  <?php }?>
+</ul>
+</div>
+
+<div class="ditu-sou"id="jj33" style="display:none">
+<ul>
+  <?php for($i=0;$i<7;$i++){?>
+  <li>
+    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村233号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+  </li>
+  <?php }?>
+
+</ul>
+</div>
+<div class="ditu-sou"id="jj44" style="display:none">
+<ul>
+  <?php for($i=0;$i<7;$i++){?>
+  <li>
+    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村234号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+  </li>
+  <?php }?>
+</ul>
+</div>
+<div class="ditu-sou"id="jj55" style="display:none">
+<ul>
+<?php for($i=0;$i<7;$i++){?>
+  <li>
+    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村235号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+  </li>
+  <?php }?>
+</ul>
+</div>
+<div class="ditu-sou"id="jj66" style="display:none">
+<ul>
+<?php for($i=0;$i<7;$i++){?>
+  <li>
+    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村236号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+  </li>
+  <?php }?>
+</ul>
+</div>
+
+</div>
+
+
+<?php $this->load->view('_footer.html');?>

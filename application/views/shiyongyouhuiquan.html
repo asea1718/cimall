@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>购物券</title>
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<style type="text/css">
+	.yanzheng{display: block;}
+</style>
+</head>
+<body>
+
+  <?php $this->load->view('_top.html');?>
+<script type="text/javascript" src="styles/js/tuijian.js"></script>
+
+<script type="text/javascript">
+	function show_yz(){
+		$(".yanzheng").css('display','block');
+	}
+
+	function yzyhq(){
+		var yhq = $.trim($("input[name='yhq']").val());
+		var url = "<?php echo site_url('member/yzyhq');?>";
+		$.post(
+			url,
+			{yhq:yhq},
+			function(data){
+				alert(decodeURIComponent(data));
+				$(".yanzheng").css('display','none');
+			},
+			'text');
+	}
+</script>
+<div class="jfdh">
+<div class="jfdh1">
+<h1>购物券</h1>
+<a href="javascript:;" onclick="show_yz()" style="cursor:pointer;" ><img src="<?php echo base_url().MIMG;?>tjgwq1.jpg"></a>
+</div>
+
+<div class="yanzheng">
+	<input type="text" name="yhq" > <a href="javascript:;" onclick="yzyhq();"><img src="<?php echo base_url().MIMG;?>tijiao.jpg"></a>
+</div>
+
+<div class="jfdh2">
+
+<ul>
+<li><span>编号：123456789</span><span>类别：积分券</span><span>使用时间：不限时</span><span>金额：5元</span></li>
+
+</ul>
+
+</div>
+</div>
+
+<?php $this->load->view('_footer.html');?>

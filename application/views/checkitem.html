@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<title>订单查询</title>
+</head>
+<body>
+
+ <?php $this->load->view('_top.html');?>
+
+<div class="content">
+        <div class="ddcx">
+			<div class="ddcx1">
+				<h1>订单查询</h1>
+				<span>总计：￥148元</span>
+			</div>
+			<div class="ddcx2">
+			<form method="get">
+				
+				<ul class="ddcx2-1">
+					<li class="w300">订单信息</li>
+					<li class="w100">收货人</li>
+					<li class="w100">应付金额</li>
+					<li class="w100">
+							   <select name="select" style="width:95px;height:25px;">
+								 <option value="1">全部时间</option>
+							   </select>
+					</li>
+					<li class="w100">
+						<select name="type" style="width:95px;height:25px;">
+							<option value="all">所有订单</option><option value="pending">待付款的</option><option value="submitted">已提交的</option><option value="accepted">待发货的</option><option value="shipped">已发货的</option><option value="finished">已完成的</option><option value="canceled">已取消的</option>						</select>
+				   </li>
+					<li class="w135">操作</li>
+				</ul>
+				
+				<input type="hidden" name="app" value="buyer_order">
+				<input type="hidden" name="act" value="index">
+			</form>				
+			<?php if(!empty($orderlist)){ foreach($orderlist as $ol){ $ol = get_object_vars($ol);?>
+							<ul class="ddcx2-2">
+                    <p class="num">订单编号: <span><?php echo $ol['orderNo'];?></span></p>
+                    
+					<li class="w300 right-xian t-L"><a href=""><img src="<?php echo base_url().MIMG;?>cpp.jpg" class="ddcx2-2-img"></a><a href="" class="height70"><?php echo $ol['subject'];?></a></li>
+					<li class="w100 right-xian height70">李贺</li>
+					<li class="w74 right-xian" style="padding:10px">¥0.00<br>货到付款</li>
+					<li class="w74 right-xian" style="padding:10px">2014-10-25<br>21:08:33</li>
+					<li class="w99 right-xian height70">已提交</li>
+					<li class="w135" style="margin-top:10px"><a href="<?php echo site_url('member/order').'/'.$ol['orderNo'];?>">查看</a>|<a href="">删除</a><br><a href=""><img src="<?php echo base_url().MIMG;?>hym.png"></a>
+					
+					<!-- <div class="handle">
+						<a class="btn1" href="index.php?app=buyer_order&amp;act=evaluate&amp;order_id=1" target="_blank" id="order1_evaluate" style="display:none">我要评价</a>
+						<a href="index.php?app=cashier&amp;order_id=1" target="_blank" id="order1_action_pay" style="display:none" class="btn">付款</a>
+						<input type="button" value="确认收货" class="btn1" ectype="dialog" dialog_id="buyer_order_confirm_order" dialog_width="400" dialog_title="确认收货" uri="index.php?app=buyer_order&amp;act=confirm_order&order_id=1&ajax"  id="order1_action_confirm" style="display:none" />
+						<input type="button" value="取消订单" class="btn1" ectype="dialog" dialog_width="400" dialog_title="取消订单" dialog_id="buyer_order_cancel_order" uri="index.php?app=buyer_order&amp;act=cancel_order&order_id=1&ajax"  id="order1_action_cancel" />
+						<a href="index.php?app=buyer_order&amp;act=view&amp;order_id=1" target="_blank" class="btn1">查看</a>
+					</div> -->
+					</li>
+					
+				</ul>
+				<?php }}?>
+				
+							</div>
+		</div>
+
+    <div class="clear"></div>
+</div>
+
+<?php $this->load->view("_footer.html");?>

@@ -1,0 +1,311 @@
+body {
+	font: 1em/150% Arial, Helvetica, sans-serif;
+}
+a {
+	color: #669;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+h1 {
+	font: bold 36px/100% Arial, Helvetica, sans-serif;
+}
+ol, ul {
+	list-style: none;
+}
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { 
+    display: block;
+}
+
+
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
+/*=======================*/
+#pagewrap {
+	position: relative;
+	width: 1190px;
+	margin: 0 auto;
+}
+#header {
+	height: 80px;
+	background: #c1ebf9;
+}
+#content {	position: relative;background: #fafafa;	}
+#signup-content,.login-box,.reg-box {	position: relative;background: #fafafa;	width: 590px;margin:0 auto;}
+
+ 
+
+ 
+/* border & guideline (you can ignore these) 
+#content {
+	background: #f8f8f8;
+}
+ 
+#header, #content {
+	margin-bottom: 5px;
+}
+#pagewrap, #header, #content {
+	border: solid 1px #ccc;
+}
+*/
+
+
+/* stepbar */
+.stepbar {	overflow: hidden;	}
+.buy-logo {
+	padding-top: 26px;
+	padding-bottom: 12px;
+	display: inline-block;
+	position: relative;
+}
+.f-reg{
+	margin-left: 50px;
+	background: none;
+}
+.reg-title{
+	
+ 	position: relative;
+ 	width: 354px;
+ 	margin: 0 auto;
+ 	margin-top: 40px;
+	background: url(../images/loginline.png) no-repeat center bottom;
+}
+ .reg-title i.phone{ 
+
+	display: block;
+	width: 15px;
+	height: 19px;
+	left: 15px;
+	position: absolute;
+	top: -2px;
+}
+ .f-reg-phone{
+ 
+	height: 38px;
+
+	line-height: 16px;
+	padding-left: 20px;
+	margin-left: 85px;
+	display: inline-block;
+
+	background: url(../images/phone.png) no-repeat 0 0;
+	text-decoration: none;
+	font-size: 22px;
+	font-weight: bold;
+	color: #666;
+	vertical-align: middle;
+}
+
+.stepbar .leli-stepbar {
+	position: absolute;
+	right: 0;
+	top: 40px;
+}
+.stepbar .leli-stepbar li {
+	width: 310px;
+	height: 45px;
+	font-size: 14px;
+	position: relative;
+	float: left;
+	color: #404040;
+	font-weight: 700;
+	text-align: center;
+	text-indent: -999em;
+}
+
+
+.stepbar .leli-stepbar li.stepbar-current {
+	background:url(../images/step1.png) no-repeat 0 0;
+}
+.stepbar .leli-stepbar li.step-two{
+	width: 220px;
+	height: 45px;
+	top: 7px;
+	left: -15px;
+	background:url(../images/step2.png) no-repeat 0 0;
+}
+.stepbar .leli-stepbar li.step-three{
+	width: 220px;
+	height: 36px;
+	top: 7px;
+	left: -32px;
+	background:url(../images/step3.png) no-repeat 0 0;
+}
+.stepbar .leli-stepbar li.stepbar-last {
+	width: 217px;
+	height: 36px;
+	top: 7px;
+	left: -50px;
+	background:url(../images/step4.png) no-repeat 0 0;
+
+}
+
+
+/* login */
+
+.login-box .field {
+	padding: 10px 0;
+	zoom: 1;
+	position: relative;
+	z-index: 1;
+	margin-left:70px;
+}
+
+.login-box .username-field {
+	padding-top: 32px;
+	position: relative;
+}
+
+.login-box .login-text,.login-box .check-text {
+	width: 350px;
+	height: 54px;
+	line-height: 43px;
+	padding: 3px;
+	padding-left: 20px;
+	vertical-align: middle;
+	border: 1px solid #DEDEDE;
+}
+
+.login-box .check-text {
+	width: 177px;
+	
+}
+.ph-label,.ph-label-check {
+	height: 54px;
+	line-height: 54px;
+	left: 30px;
+	position: absolute;
+	padding: 0 0 0 6px;
+	color: #666;
+	opacity: 1;
+}
+
+.ph-label2,.ph-label-check{color:#daccda;}
+
+.login-box .check-code-img {
+	border: none;
+	height: 53px;
+	vertical-align: middle;
+	width: 126px;
+	margin-right: 1px;
+}
+.login-box .change-code {
+	display: inline-block;
+	line-height: 14px;
+	margin: 0;
+	vertical-align: middle;
+	color: #0066cc;
+	font:12px/1.5 Tahoma,Helvetica;
+}
+
+
+
+.login-box .submit button,.login-box .step2-submit button,.login-box .step3-submit button,.login-box .reg-check-submit button,.login-box .reg-submit button {
+	width: 352px;
+	height: 46px;
+	border: 0;
+	display: inline-block;
+	overflow: hidden;
+	vertical-align: middle;
+	background: url(../images/nextbtn.png) no-repeat  0 0;
+	cursor: pointer;
+	text-indent: -999em;
+}
+.login-box .step2-submit button {	background: url(../images/veribtn.png) no-repeat  0 0;	}
+.login-box .step3-submit button {	background: url(../images/confirmbtn.png) no-repeat  0 0;	}
+.login-box .step4-submit button {	background: url(../images/ok.png) no-repeat  0 0;	}
+.login-box .reg-check-submit button{	width:150px;border:1px solid #d1d1d1;border-radius:3px;color:#006699;font-weight: bold;background: #eee;text-indent: 0;}
+.login-box .reg-submit button {	background: url(../images/regbtn.png) no-repeat  0 0;	}
+.login-box .submit button:hover, .login-submit button.hover {
+
+}
+
+.login-box .reg-check-submit{width: 80px;position: absolute;top: 110px;left: 300px;}
+.prompt-user{
+	position: absolute;
+	top: 40px;
+	left: 400px;
+	width: 240px;
+	height: 45px;
+	line-height: 45px;
+	background: #fffceb;
+	color: #999;
+	font-size: 12px;
+	text-align: center;
+}
+.check-status{
+	position: absolute;
+	top: 30px;
+	left: 165px;
+	width: 25px;
+	height: 25px;
+	background: url(../images/error.png) no-repeat 0 0;
+	text-indent: -999em;
+}
+.forget-passwd{
+	float: right;
+	margin-right: 45px;
+	color: #999;
+}
+/* 登录 */
+.signup-box{	margin: 0 0 0 120px;padding-top: 50px;	}
+.f-signup{
+	position: relative;
+}
+.f-signup-title{
+	position: absolute;
+	width: 500px;
+	height: 12px;
+	margin-left: 50px;
+	background: url(../images/signupline.png) no-repeat 0 0;
+}
+.f-signup .f-signup-content{
+	position: absolute;
+	top: 12px;
+	left: 50px;
+	width: 498px;
+	height: 310px;
+	background: #fff;
+	border:1px solid #dedede;
+	border-top: none;
+
+}
+.signup-logo a{
+	font-size: 18px;
+	color: #666;
+	font-weight: bold;
+	padding-left: 270px;
+}
+.signup-logo .signup-reg{
+	float: right;
+	padding-left: 0px;
+	padding-right: 50px;
+	color: #0066cc;
+	font-size: 14px;
+}
+
+.in-field{height: 60px;line-height: 60px;vertical-align: middle;width: 350px;background-color: #fff;padding-left: 20px;border: 1px solid #DEDEDE;margin-top: 15px;font-size: 18px;margin-left: 60px;}
+.in-fieldcode{height: 60px;line-height: 60px;vertical-align: middle;width: 200px;background-color: #fff;padding-left: 20px;border: 1px solid #DEDEDE;margin-top: 15px;font-size: 18px;margin-left: 60px;}
+.fl-input{border: 0px;height: 43px;font-size: 18px;}
+.fl-inputcode{border: 0px;height: 43px;font-size: 18px;width: 100px;}
+.fl-span{color: #666;}
+#sendbtn{
+	display: block;
+	height: 40px;
+	line-height: 40px;
+	vertical-align: middle;
+	text-align: center;
+	width: 140px;
+	border: 1px solid #d1d1d1;
+	border-radius: 3px;
+	color: #006699;
+	font-weight: bold;
+	background: #eee;
+	text-indent: 0;
+	cursor:pointer;
+	font-size: 10px;
+}

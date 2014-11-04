@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>成功添加购物车</title>
+<meta name="description" content="邑客社区网购超市" />
+<meta name="keywords" content="烦都烦死分,邑客社区网购超市" />
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+<?php $this->load->view('_top.html');?>
+    <div class="m" id="succeed">
+            <div class="success">
+                <div class="success-b">
+                    <h3>商品已成功加入购物车！</h3>
+                    <span id="flashBuy" style="display:none">商品数量有限，请您尽快下单并付款！</span>
+                </div>
+            <span id="initCart_next_go"><a id="GotoShoppingCart" href="<?php echo site_url('cart');?>" class="btn-pay">去结算</a><a href="<?php echo site_url('store');?>" class="btn-continue">继续购物</a></span></div>
+            
+        </div>
+ 
+
+ <?php $this->load->view('_footer.html');?>

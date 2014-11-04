@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<title>订单查询</title>
+</head>
+<body>
+
+ <?php $this->load->view('_top.html');?>
+
+ <?php 
+ 	$ptotal = get_object_vars($productSubtotal);
+ 	$order = get_object_vars($order);
+ 	$orderlist = $order['orderDetailList'];
+ ?>
+<div class="dd_content">
+    <div class="particular">
+        <div class="particular_wrap">
+            <h2>订单详情</h2>
+            <div class="box">
+                <div class="state">订单状态&nbsp;:&nbsp;<strong>已提交</strong></div>
+                <div class="state">订单数量&nbsp;:&nbsp;<strong><?php echo $ptotal['count'];?></strong></div>
+                <div class="num">订单号&nbsp;:&nbsp;<?php echo $order['orderNo'];?></div>
+                <div class="time">下单时间&nbsp;:&nbsp;<?php echo $order['createTime'];?></div>
+            </div>
+            <h3>订单信息</h3>
+        <!--
+            <dl class="info">
+                <dt>卖家信息</dt>
+                <dd>店铺名&nbsp;:&nbsp;测试店铺</dd>
+                <dd>电话号码&nbsp;:&nbsp;11111111111</dd>
+                <dd>QQ&nbsp;:&nbsp;-</dd>
+                <dd>旺旺&nbsp;:&nbsp;-</dd>
+                <dd>所在地区&nbsp;:&nbsp;上海市	浦东新区</dd>
+                <dd>手机号码&nbsp;:&nbsp;-</dd>
+                <dd>MSN&nbsp;:&nbsp;-</dd>
+                <dd>详细地址&nbsp;:&nbsp;曹杨路曹阳2村</dd>
+            </dl>
+        -->
+            <div class="ware_line">
+                <div class="ware">
+            	<?php   
+            	if(!empty($orderlist)) { foreach($orderlist as $ol){ $ol = get_object_vars($ol); 
+            	?>
+                    <div class="ware_list">
+                        <div class="ware_pic">
+                        	<img src="data/system/default_goods_image.gif" width="50" height="50"  />
+                        </div>
+                        <div class="ware_text">
+                            <div class="ware_text1">
+                                <a href="goods/3"><?php echo $ol['name'];?></a><br/>
+                                <span></span>
+                            </div>
+                            <div class="ware_text2">
+                                <span>数量&nbsp;:&nbsp;<strong><?php echo $ol['count'];?></strong></span>
+                                <span>价格&nbsp;:&nbsp;<strong>¥<?php echo $ol['price'];?></strong></span>
+                                <span>创建时间&nbsp;:&nbsp;<strong>¥<?php echo $ol['createTime'];?></strong></span>
+                            </div>
+                        </div>
+                    </div>
+                <?php }} ?>
+                    <div class="transportation">
+                    	运费&nbsp;:&nbsp;<span>¥5.00<strong>(测试配送)</strong></span>优惠打折&nbsp;:&nbsp;<span>¥0.00</span>总价&nbsp;:&nbsp;<b>¥<?php echo $ptotal['totalFee'];?></b>
+                    </div>
+                    <ul class="order_detail_list">
+                    	<li>支付方式&nbsp;:&nbsp;货到付款</li>
+                	</ul>
+                </div>
+            </div>
+
+            <h3>物流信息</h3>
+            <div class="goods">
+                收货地址&nbsp;:&nbsp;法国的非官方, &nbsp;23234234,&nbsp;上海市	徐汇区&nbsp;大股东国大使馆,&nbsp;12313<br />
+                配送方式&nbsp;:&nbsp;测试配送
+            </div>
+
+            <div class="particular_bottom"></div>
+        </div>
+
+        <div class="clear"></div>
+        <div class="adorn_right1"></div>
+        <div class="adorn_right2"></div>
+        <div class="adorn_right3"></div>
+        <div class="adorn_right4"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+
+
+<?php $this->load->view("_footer.html");?>

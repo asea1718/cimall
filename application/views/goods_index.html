@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>商品商品商品 - 邑客社区网购超市</title>
+<meta name="description" content="测试商品属..." />
+<meta name="keywords" content=",测试1,厨房	油,标签标签标签标签标签标签标签标签标签标签标签标签" />
+<link href="<?php echo base_url().MCSS;?>style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo base_url().MJS;?>jquery-1.7.2.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo base_url().MJS;?>images.js"></script>
+
+
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+<?php $this->load->view('_top.html');?>
+<div class="cp-top1">
+    <div class="cp-top1-L">
+    	<a href="index.php?app=stores&amp;id=1"><img src="<?php echo base_url().MIMG;?>3_07.png"  class="cpp-logo" width="96" height="96" /></a><h1>比邻便利超市</h1>
+    </div>
+
+    <div class="cp-top1-R">
+        <p><font style="font-size:22px">30元起送</font></br>1000米内30分钟送到</p>
+        <p>营业时间10:00-22:00</br>普陀曹杨路曹杨2村236号</p>
+        <p class="cp-tel">15950410056</br>15950410056</p>
+        <a href="<?php echo site_url('cart');?>" title="购物车"><img src="<?php echo base_url().MIMG;?>3_24.jpg" style="margin:20px 0 0 45px"></a>
+    </div>
+</div>  
+<div class="cp-top2">
+    <div class="cp-dh">
+        <a href="" class="fl"><img src="<?php echo base_url().MIMG;?>3_33.jpg"></a>
+        <a href="<?php echo site_url('store');?>" class="shouye">首页</a>
+        <div class="cp-from">
+            <form id="" name="" method="get" action="index.php" >
+                <input name="keyword" type="text" class="cp-from1" value="搜索您要买的商品" onfocus="if(this.value=='搜索您要买的商品') this.value='';" onkeyup="STip(this.value);" />
+                <input type="hidden" name="app" value="search" />
+                <input type="submit" value="搜索" class="cp-from2">
+            </form>
+        </div> 
+
+
+
+        <a href="" class="fl m15 l15"><img src="<?php echo base_url().MIMG;?>3_38.jpg"></a>
+        <a href="" class="fl m15"><img src="<?php echo base_url().MIMG;?>3_36.jpg"></a>
+    </div>
+<script type="text/javascript" src="<?php echo base_url().MJS;?>goodsinfo.js" charset="utf-8"></script>
+<script type="text/javascript" src="<?php echo base_url().MJS;?>cart.js" charset="utf-8"></script>
+
+
+<div class="cp-neiye1">
+    <div class="image" id="bigpics">
+        <img src="<?php echo base_url().MIMG;?>2_10.jpg" width="400" height="400"  />
+    </div>
+
+    <div class="switch">
+        <div class="icon1"><a href="#" title="上一个" onfocus="this.blur();">上一个</a></div>
+        <div class="switch_center" id="pics">
+            <ul>
+                                <li>
+                <a href="#" class="on"><img src="<?php echo base_url().MIMG;?>2_10.jpg" width="60" height="60" /></a>
+                </li>
+                                <li>
+                <a href="#" ><img src="<?php echo base_url().MIMG;?>3_37.jpg" width="60" height="60" /></a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="icon2"><a href="#" title="下一个" onfocus="this.blur();">下一个</a></div>
+        <div class="clear"></div>
+    </div>
+</div> 
+<div class="cp-neiye2">
+    <div class="cp-neiye2-l">
+        <div class="cp-neiye2-l-top">
+            <h1><?php echo $good['name'];?></h1>
+            <h2><?php echo $good['summary'];?>&nbsp;</h2>
+        </div>
+        <div class="cp-neiye2-l-top1">
+            <img src="<?php echo base_url().MIMG;?>6_03.jpg" style="float:left;margin-top:23px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font style="color:red;font-weight:bold;font-size:32px">&yen;<?php echo $good['price'];?></font>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<del>&yen;<?php echo $good['price'];?></del>
+        </div>
+        <div class="cp-neiye2-l-top2">
+            送积分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;56
+        </div>
+        <div class="cp-neiye2-l-top3">
+            产品编号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;SHYG46666333408
+        </div>
+        <div class="cp-neiye2-l-top4">
+			<div class="choose-amount fl shuliang">
+				<div class="wrap-input">
+					<a class="btn-reduce" href="javascript:;" onclick="decrease_quantity(3);">-</a>
+					<a class="btn-add" href="javascript:;" onclick="add_quantity(3);">+</a>
+					<input id="input_item_3" name="input_item_3" value="1" orig="1" changed="1" onkeyup="change_quantity(2, 3, 2, this);" class="width3" type="text">
+				</div>
+			</div>
+            <a href="javascript:addCart(<?php echo $good['productTypeId'];?>,<?php echo $good['productId'];?>,'<?php echo $good['name'];?>','<?php echo $good['price'];?>');" title="加入购物车"><img src="<?php echo base_url().MIMG;?>6_07.jpg"></a>
+            <a href="javascript:toBuy(<?php echo $good['productTypeId'];?>,<?php echo $good['productId'];?>,'<?php echo $good['name'];?>','<?php echo $good['price'];?>');" title="立即购买"><img src="<?php echo base_url().MIMG;?>6_09.jpg"></a>
+        </div>
+        <div class="cp-neiye2-l-top5">
+            <span>支付方式：</span><a href="" class="zhifu">支付宝</a><a href="" class="zhifu">货到付款</a>
+        </div>
+        <div class="cp-neiye2-l-top6">
+            <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+            <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+        </div>
+    </div>
+
+</div>    
+
+    <div class="clear"></div>
+
+	<div class="footmark_title"><h2 class="title">看过本商品的用户还购买过</h2></div>
+	<div class="cp-show">
+		<ul>
+            <?php for($i=0;$i<8;$i++){?>
+			<li><a href=""><img src="<?php echo base_url().MIMG;?>3_37.jpg" style="width:175px;height:173px"></a><p>【中盐】中盐125克碘盐</br><del>&yen;50.0</del><span>&yen;50.0元</span><a href="" class="gouwuche"><img src="<?php echo base_url().MIMG;?>3_41.jpg"></a></p></li>
+			<?php }?>
+		</ul>
+
+</div>
+<script type="text/javascript">
+    function addCart(tid,pid,name,price){
+        var gourl = "<?php echo site_url('cart/finishCart');?>";
+        var url = "<?php echo site_url('cart/addCart');?>";
+        var num = $("input[name='input_item_3']").val();
+        var img = "http://cimall.dev/assets/images/3_37.jpg";
+        $.post(
+            url,
+            {tid:tid,pid:pid,name:name,price:price,num:num,img:img},
+            function(data){
+                if(data == 1)
+                    window.location.href = gourl;
+                else
+                    alert('添加购物车失败！');
+            },
+            'text');        
+    }
+
+
+    function toBuy(tid,pid,name,price){
+        var buyurl = "<?php echo site_url('cart/buy');?>";
+        var url = "<?php echo site_url('cart/addCart');?>";
+        var num = $("input[name='input_item_3']").val();
+        var img = "http://cimall.dev/assets/images/3_37.jpg";
+        $.post(
+            url,
+            {tid:tid,pid:pid,name:name,price:price,num:num,img:img},
+            function(data){
+                if(data == 1)
+                    window.location.href = buyurl;
+                else
+                    alert('添加购物车失败！');
+            },
+            'text');
+        
+    }
+</script>
+<?php $this->load->view('_footer.html');?>

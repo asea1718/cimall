@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>注册页面</title>	
+	<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url().MCSS.'login.css';?>" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+</head>
+ <body>
+ <?php $this->load->view('_top.html');?>
+<div id="pagewrap"> 
+	<div id="content" class="reg-box"> 
+		
+		<div id="step" class="stepbar">
+			<div class="reg-title">
+				 <i class="phone"></i><a href="#" target="_top" title="" class="f-reg-phone">手机注册</a> 
+		
+			</div>
+
+		</div>
+
+		<div class="login-box f-reg">
+			<form action="<?php echo site_url('home/doRegister');?>" method="post">
+				<div style="height: 10px;"></div>
+				<div class="in-field">
+					<span class="fl-span">手机号：</span><input type="text" name="accountName" class="fl-input" placeholder="请输入手机号码">
+				</div>
+				<div class="in-fieldcode">
+					<span class="fl-span">验证码：</span><input type="text" name="captchaCode" class="fl-inputcode" placeholder="输入验证码"><div class="reg-check-submit">
+						<span onclick="sendPhone()" id="sendbtn">点击发送验证码到手机</span>
+				</div>
+				</div>
+				<div class="in-field">
+					<span class="fl-span">设置密码：</span><input type="password" name="accountPasswd" class="fl-input" placeholder="请输入密码">
+				</div>
+				<div class="in-field">
+					<span class="fl-span">重复密码：</span><input type="password" name="re_accountPasswd" class="fl-input" placeholder="请再次输入密码">
+				</div>
+				<div class="in-field">
+					<span class="fl-span">用户地址：</span><input type="text" name="address" class="fl-input" placeholder="请输入您的地址">
+				</div>
+				<div class="field reg-submit">
+				<input type="checkbox" id="agreen_chk"/>我已经阅读并同意《协议》<br/>
+					<button type="submit" class="Submit" tabindex="5" id="SubmitStatic">注册</button>
+				</div>
+			</form>
+		</div>
+	</div> 
+</div> 
+<script type="text/javascript">
+	function sendPhone(){
+		var url = "<?php echo site_url('home/sendPhone');?>";
+		var phone = $("input[name='accountName']").val();
+		//alert('message');
+		$.post( url,
+				{info:'register',phone:phone},
+				function(data){
+					//alert(10);
+					if(data == 0){
+						alert('发送成功');
+					}else if(data == -2){
+						alert("发送次数太多，稍等");
+					}else{
+						alert("发送失败");
+					}
+				},
+				'text');
+	}
+</script>
+<?php $this->load->view('_footer.html');?>

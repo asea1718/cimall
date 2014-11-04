@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+<title>购物车-2</title>
+</head>
+<body>
+
+ <?php $this->load->view('_top.html');?>
+<style type="text/css">
+.fs18{font-size: 18px;}
+	.topay-plist h1{font-size: 18px;}
+	.topay-plist table{width: 984px;margin: 10px auto;}
+	.topay-tb thead th{background-color: #eeeeee;height: 25px;
+					border-right: 1px solid #fff;
+					color: #666;
+					line-height: 25px;
+					text-align: center;
+					background-color: #eeeeee;
+	}
+	.topay-tb tbody tr{}
+	.topay-tb tbody td{padding: 0 10px;border-bottom: 1px solid #eee;}
+	.tp-yhq{margin-top: 20px;height: 30px;line-height: 30px;}
+	.tp-yhq h1{margin-right: 30px;}
+	.ti-jfdh2{width: 866px;
+			margin-top: 20px;
+			margin: 0 auto;
+	}
+	.ti-jfdh2 p{font-weight: bold;font-size: 14px;padding: 20px 0;border-bottom: 1px solid #ccc;}
+	.ti-jfdh2 ul{margin-left: 15px}
+	.ti-jfdh2 ul li{float: left;height: 50px;line-height: 50px;margin-top: 20px;}
+	.ti-ljzf{width: 866px;text-align: center;margin: 0 auto;padding-top: 50px;}
+</style>
+<div class="zxfh-g">
+<div class="topay-plist">
+<h1>&nbsp;&nbsp;商品清单</h1>
+<table class="topay-tb">
+	<thead>
+		<tr>
+			<th>商品</th>
+			<th>单价（元）</th>
+			<th>数量</th>
+			<th>总价（元）</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php $totalprice=0; if(!empty($items)){foreach($items as $item){?>
+		<tr>
+			<td class="fore1" style="width: 406px;">
+				<div class="fl"><a href="<?php echo site_url('good/single').'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><img src="<?php echo $item['img'];?>" height="50" width="50"></a></div>
+				<div style="padding-top: 5px;"><a href="<?php echo site_url('good/single').'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><?php echo $item['name'];?></a></div>
+			</td>
+			<td class="fore2" style="text-align: center;">￥<?php echo $item['price'];?></td>
+			<td class="fore3" style="text-align: center;">x <?php echo $item['num'];?></td>
+			<td class="fore4" style="text-align: center;">￥<?php echo $item['price']*$item['num'];?></td>	
+			<?php $totalprice = $totalprice + $item['price']*$item['num'];?>		
+		</tr>
+		<?php }}?>
+	</tbody>
+</table>
+</div>
+
+<div class="zxfh">
+<p>商品金额总计：￥<?php echo $totalprice;?>元</p>
+</div>
+<script type="text/javascript">
+	function show_yz(){
+		$(".yanzheng").css('display','block');
+	}
+
+	function yzyhq(){
+		var yhq = $.trim($("input[name='yhq']").val());
+		var url = "<?php echo site_url('member/yzyhq');?>";
+		$.post(
+			url,
+			{yhq:yhq},
+			function(data){
+				alert(decodeURIComponent(data));
+				$(".yanzheng").css('display','none');
+			},
+			'text');
+	}
+</script>
+<div class="jfdh2 clearfix">
+	<div class="tp-yhq">
+		<h1>使用已有购物券</h1><a href="javascript:;" onclick="show_yz()"><img src="<?php echo base_url().MIMG;?>tjgwq.jpg"></a>
+	</div>
+	<div class="yanzheng">
+		<input type="text" name="yhq" > <a href="javascript:;" onclick="yzyhq();"><img src="<?php echo base_url().MIMG;?>tijiao.jpg"></a>
+	</div>
+<ul class="clearfix">
+<li><span>编号：123456789</span><span>类别：积分券</span><span>使用时间：不限时</span><span>金额：5元</span></li>
+
+</ul>
+</div>
+
+<div style="margin: 25px auto;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
+
+<div class="ti-jfdh2 clearfix">
+	<div class="tp-yhq">
+		<h1 class="fl fs18">选择支付方式</h1>		
+		<a href="javascript:;" id="zxzf_img"><img src="<?php echo base_url().MIMG;?>zxzf.jpg" ></a>
+		<a href="javascript:;" id="hdfk_img"><img src="<?php echo base_url().MIMG;?>hdfk.jpg" ></a>
+	</div>
+	<div>
+		<ul class="tp-zf1 clearfix">
+		<li><img src="<?php echo base_url().MIMG;?>zhifubao.jpg"></li>
+		<li><img src="<?php echo base_url().MIMG;?>qitazhifu.jpg"></li>
+		<li><img src="<?php echo base_url().MIMG;?>qitazhifu.jpg"></li>
+		<li><img src="<?php echo base_url().MIMG;?>qitazhifu.jpg"></li>
+		</ul>
+	</div>
+
+</div>
+<div style="margin: 25px auto;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
+<!--
+<div class="jfdh2">
+<h2>确认收货地址</h2>
+<div class="jfdh2-1">
+<span>李贺  </span><span>上海普陀区曹杨路898号联合大厦486室</span><p><a href="">修改</a><a href="">确认</a></p>
+
+</div>
+</div>
+-->
+<div class="sjr clear">
+	<h1>确认收货地址</h1>
+<form>
+<ul>
+<li><p><font style="color:#ec6517">※</font>收货人：</p><input type="text" class="sjr-txt"></li>
+
+<li><p><font style="color:#ec6517">※</font>所在地区：</p>   <select name="select" style="width:80px;height:25px;" name="select" >
+             <option value="1">上海市</option>
+         
+     
+           </select> <select name="select" style="width:80px;height:25px;" name="select" >
+             <option value="1">请选择</option>
+             <option value="2">上海</option>
+     
+           </select> <select name="select" style="width:80px;height:25px;" name="select" >
+             <option value="1">请选择</option>
+             <option value="2">上海</option>
+     
+           </select></li>
+		   <li><p><font style="color:#ec6517">※</font>详细地址：</p><input type="text" class="sjr-txt" style="width:320px"></li>
+<li><p><font style="color:#ec6517">※</font>手机号码：</p><input type="text" class="sjr-txt"> <p>或&nbsp;&nbsp;&nbsp;固定电话：</p><input type="text" class="sjr-txt"></li>
+<li><p><font style="color:#ec6517">※</font>邮箱：</p><input type="text" class="sjr-txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用来接收订单提醒邮件，便于您及时了解订单状态</li>
+<li><input type="submit" value=""class="sjr-queding"></li>
+
+</ul>
+</form>
+</div>
+</div>
+
+<div class="clear"></div>
+<div class="ti-ljzf">
+<div style="margin-bottom: 50px;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
+<a href=""><img src="<?php echo base_url().MIMG;?>lijizhifu.jpg"></a>
+</div>
+
+
+<?php $this->load->view('_footer.html');?>

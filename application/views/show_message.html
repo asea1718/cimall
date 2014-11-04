@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<title>超市-首页</title>
+<style type="text/css">	
+	.show-m {margin: 20px auto;}
+	.show-content {margin: 0 auto;border: 1px solid #e3e3e3;width: 700px;padding-bottom: 20px;}
+	.sm-hd {width: 700px;height: 40px;vertical-align: middle;text-align: center; line-height: 40px; background: #F6F6F6;border-bottom: 1px solid #e3e3e3;font-size: 18px;color: red;}
+	.sm-bd p {padding-left: 150px;padding-top: 20px;font-size: 18px;}
+	.sm-bd a {color: red;}
+</style>
+</head>
+<body>
+
+<?php $this->load->view('_top.html');?>
+
+<div class="show-m">
+		<div class="show-content">
+			<div class="sm-hd"><span>提示信息</span></div>
+			<div class="sm-bd">
+				<p>提示内容：<span style="color:blue;"><?php echo @$message;?></span></p>
+				<p>还有 <span id="num" style="color:red;"><?php echo @$time;?></span> 秒自动跳转……</p>
+				<p>点击这里<a href="javascript::void();" onclick="javascript :history.back(-1)"> 返回</a></p>
+				<p>点击这里<a href="<?php echo site_url('home');?>"> 回到首页</a></p>
+			</div>		
+	</div>
+<script type="text/javascript">
+	$(function(){
+		function jump(count){
+			window.setTimeout(function(){
+				count--;
+				if(count > 0){
+					$("#num").html(count);
+					jump(count);
+				} else {
+					$("#num").html(count);
+					location.href = "<?php echo @$goto;?>";
+				}
+			}, 1000);
+		}
+		jump(<?php echo $time;?>);
+		//jump(4);
+	});
+</script>
+<?php $this->load->view("_footer.html");?>

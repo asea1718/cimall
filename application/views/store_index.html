@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>邑客社区网购超市</title>
+<meta name="description" content="邑客网，由境内外知名的投资机构、投资人联合享誉国内外的知名企业家、日用消费品、电子商务、网络营销、互联网技术等专家及精英团队合力打造，利用全球领先的互联网、物联网及移动无线技术(LBS、GPS、APP)，旨在联手住宅社区物业，建立“社区物业 + 社区住户 + 周边商家”之间高效的商务通道。创办中国最领先的“住宅社区在线便利店”既“社区即时送”." />
+<meta name="keywords" content="上海地区超市,社区网购超市,邑客,上海社区超市,网购超市" />
+<script type="text/javascript" src="<?php echo base_url().MJS;?>jquery-1.7.2.min.js" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS;?>style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="<?php echo base_url().MJS;?>images.js"></script>
+
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+
+<?php $this->load->view('_top.html');?>
+<div class="cp-top1">
+    <div class="cp-top1-L">
+    	<a href="<?php echo site_url('store');?>"><img src="<?php echo base_url().MIMG;?>3_07.png"  class="cpp-logo" width="96" height="96" /></a><h1>比邻便利超市</h1>
+    </div>
+
+    <div class="cp-top1-R">
+        <p><font style="font-size:22px">30元起送</font></br>1000米内30分钟送到</p>
+        <p>营业时间10:00-22:00</br>普陀曹杨路曹杨2村236号</p>
+        <p class="cp-tel">15950410056</br>15950410056</p>
+        <a href="<?php echo site_url('cart');?>" title="购物车"><img src="<?php echo base_url().MIMG;?>3_24.jpg" style="margin:20px 0 0 45px"></a>
+    </div>
+</div>  
+<script type="text/javascript">
+  function gsearch(sid){
+    
+    var kw = $.trim($('#p_kw').val());      
+    if(kw == '搜索您要买的商品' || kw == '')
+      return false;
+    else{
+      var gourl = "<?php echo site_url('store/goodSearch');?>"+'/sid/'+sid+'/keyword/'+decodeURIComponent(kw);
+      window.location.href = gourl;        
+    }       
+   
+  }
+</script>
+<div class="cp-top2">
+    <div class="cp-dh">
+        <a href="" class="fl"><img src="<?php echo base_url().MIMG;?>3_33.jpg"></a>
+        <a href="<?php echo site_url('store');?>" class="shouye">首页</a>
+        <div class="cp-from">            
+            <input name="keyword" type="text" id="p_kw" class="cp-from1" value="搜索您要买的商品" onfocus="if(this.value=='搜索您要买的商品') this.value='';" onkeyup="STip(this.value);" onkeydown="javascript:if(event.keyCode==13)gsearch(<?php echo $storeid;?>);"/>           
+            <button class="cp-from2" onclick="gsearch(<?php echo $storeid;?>)">搜索</button>           
+        </div> 
+
+
+
+        <a href="" class="fl m15 l15"><img src="<?php echo base_url().MIMG;?>3_38.jpg"></a>
+        <a href="" class="fl m15"><img src="<?php echo base_url().MIMG;?>3_36.jpg"></a>
+    </div>    
+    <div class="cp-show">
+        <div class="tmall_box fl">
+            <div id="tmall_nav">
+                <div class="tmall_cat_nav fl">
+                    <ul class="cate_nav">
+                        <li>
+                            <div class="cat_0_nav">
+                                1F&nbsp;生鲜
+                            </div>
+                        </li>
+                        <hr style="border:1px solid #f5c620">
+                        <li>
+                            <div class="cat_1_nav">
+                                2F&nbsp;粮油
+                            </div>
+                        </li>
+                        <hr style="border:1px solid #f5c620">
+                        <li>
+                            <div class="cat_0_nav">
+                                3F&nbsp;调料
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="fenlei-list fr">
+            <?php if(!empty($pinfos)){foreach($pinfos as $pinfo){ ?>   
+            <ul><!--class : diyi dier-->            
+                <li class="diyi"><h1 class="wjy">1F</h1><h2 class="wjy1"><?php echo $pinfo['name'];?></h2><h3 class="wjy2"><?php echo $pinfo['shortDescription'];?></h3></li>            
+                <?php if(!empty($pinfo['goods']['productList'])){foreach($pinfo['goods']['productList'] as $good){?>
+                <?php $good = get_object_vars($good);?>
+                <li><a href="<?php echo site_url('good/single').'/tid/'.$good['productTypeId'].'/pid/'.$good['productId'];?>"><img src="<?php echo base_url().MIMG;?>3_37.jpg" style="width:175px;height:173px"></a><p><?php echo $good['name'];?></br><del>&yen;<?php echo $good['price'];?></del><span>&yen;<?php echo $good['price'];?>元</span><a href="<?php echo site_url('good/single').'/tid/'.$good['productTypeId'].'/pid/'.$good['productId'];?>" class="gouwuche"><img src="<?php echo base_url().MIMG;?>3_41.jpg"></a></p></li>
+                <?php }} ?>         
+            </ul>
+            <?php }} ?>
+        </div> 
+	</div>
+</div> 
+
+<?php $this->load->view('_footer.html');?>

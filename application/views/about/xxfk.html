@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>信息反馈</title>
+<?php $this->load->view('about/a_top.html');?>
+
+<div class="xxfk">
+<div class="xxfk1">
+<h1 class="wrw-tit">信息反馈</h1>
+<form method="post" action="" name="myform" id="myform"> 
+<p>
+<textarea name='info[msg]' id='msg' rows="14" cols="27"placeholder="请填写您给我们的反馈内容，谢谢"></textarea>
+</p>
+
+<p style="float:left;margin:5px 0 0 0px;font-size:12px;color:#666;line-height:30px">请填写您的联系方式</br><input  type="text" name="info[mail]" id="mail" class="tx3"size="28" placeholder="手机/邮箱/电话">   <input  name="dosubmit" id="dosubmit" class="zzssbnt"   type="submit"  value="" /></p>
+</form>
+
+
+</div>
+</div>
+<?php $this->load->view('_footer.html');?>

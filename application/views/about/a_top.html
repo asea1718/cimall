@@ -1,0 +1,26 @@
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<link rel="icon" href="<?php echo base_url();?>favicon.ico" type="image/x-icon" />
+
+</head>
+<body>
+
+
+ <?php $this->load->view('_top.html');?>
+<?php $a_class = isset($a_class)?$a_class:'';?>
+<div class="foot-t">
+<div class="foot-t-dh">
+<a href="/" class="<?php echo $a_class=='sy'?'dhon':'';?>">首页</a>
+<a href="<?php echo site_url('about/aboutUs');?>"  class="<?php echo $a_class=='gywm'?'dhon':'';?>">关于我们</a>
+<a href="<?php echo site_url('about/ggzz');?>"  class="<?php echo $a_class=='ggzz'?'dhon':'';?>">广告赞助</a>
+<a href="<?php echo site_url('about/fwsm');?>"  class="<?php echo $a_class=='fwsm'?'dhon':'';?>">服务声明</a>
+<a href="<?php echo site_url('about/mzsm');?>"  class="<?php echo $a_class=='mzsm'?'dhon':'';?>">免责申明</a>
+<a href="<?php echo site_url('about/flsm');?>"  class="<?php echo $a_class=='flsm'?'dhon':'';?>">法律申明</a>
+<a href="<?php echo site_url('about/xxfk');?>"  class="<?php echo $a_class=='xxfk'?'dhon':'';?>">信息反馈</a>
+<a href="<?php echo site_url('about/contactUs');?>"  class="<?php echo $a_class=='lxwm'?'dhon':'';?>">联系我们</a>
+<a href="<?php echo site_url('about/jionUs');?>"  class="<?php echo $a_class=='jrwm'?'dhon':'';?>">加入我们</a>
+</div>
+<div class="foot-t-sm">
+客户服务：1000(1-电话购物;2-商品咨询;3-投诉建议)
+</div>
+</div>

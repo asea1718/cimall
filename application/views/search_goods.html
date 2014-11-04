@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>搜索商品 - 邑客社区网购超市</title>
+<meta name="description" content="邑客社区网购超市" />
+<meta name="keywords" content="烦都烦死分,邑客社区网购超市" />
+<script type="text/javascript" src="<?php echo base_url().MJS.'jquery-1.7.2.min.js';?>" charset="utf-8"></script>
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+<?php $this->load->view('_top.html');?>
+
+<div class="cp-show">
+		<ul>
+			<?php for($i=0;$i<10;$i++){?>
+			<li><a href="<?php echo site_url('good/single/88');?>"><img src="<?php echo base_url().MIMG.'3_37.jpg';?>" style="width:175px;height:173px"></a><p>【中盐】中盐125克碘盐</br><del>&yen;50.0</del><span>&yen;50.0元</span><a href="<?php echo site_url('good/single/88');?>" class="gouwuche"><img src="<?php echo base_url().MIMG.'3_41.jpg';?>"></a></p></li>
+			<?php }?>
+		</ul>
+
+</div>
+
+<?php $this->load->view('_footer.html');?>
