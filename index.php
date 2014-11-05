@@ -18,11 +18,11 @@
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
-	define('ENVIRONMENT', 'development');
+define('ENVIRONMENT', 'development');
 		
-	 define('MJS', 'assets/js/');
-	define('MCSS', 'assets/css/');
-	define('MIMG', 'assets/images/');
+define('MJS', 'assets/js/');
+define('MCSS', 'assets/css/');
+define('MIMG', 'assets/images/');
 	
 /*
  *---------------------------------------------------------------
