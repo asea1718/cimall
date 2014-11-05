@@ -8,14 +8,23 @@
 </head>
 <body>
 <?php $this->load->view('_top.html');?>
-<div class="denglu-g">
-<form action="<?php echo site_url('home/doLogin');?>" method="post" id="login_form">
-    <ul>
-        <h1>用户登录</h1>
-        <li><b>用户名：</b><input type="text" name="user_name" class="yonghumin"></li>
-        <li><b>密&nbsp;&nbsp;&nbsp;&nbsp;码：</b><input type="password" name="password" class="mima"></li>
-        <li><input type="submit" value="" class="denglu"><a href="index.php?app=find_password" style="float:left;">找回密码</a></li>    
-    </ul>
-</form>
+<!-- login -->
+<div class="wrw-dl">
+	<form action="<?php echo site_url('home/doLogin');?>" method="post" id="login_form">
+		<div class="wrw-dl-1">
+			<h1>用户登录</h1>
+			<a href="<?php echo site_url('home/register');?>">注册新账号</a>
+		</div>
+		<div class="wrw-dl-2"></div>
+		<ul>
+			<li><img src="<?php echo base_url().MIMG;?>wrw-yh.jpg"><input  type="text" class="mima" name="user_name" placeholder="请输入用户名或者手机号码"></li>
+			<li><img src="<?php echo base_url().MIMG;?>wrw-mm.jpg"><input  type="text" class="mima" name="password" placeholder="请输入您的密码，谢谢"></li>
+			<li style="border:none;margin:0px 0 16px 18px;height:24px;">
+			<input id="clause" type="checkbox" name="agree" value="1" /> <label for="clause">自动登录 </label><a href="" target="_blank" class="wrw-wjmm">忘记密码</a>
+			</li>
+		<h2>   <input type="submit" name="Submit" value="" class="wrw-dd"></h2>
+		</ul>
+	</form>
 </div>
+<!-- login end -->
 <?php $this->load->view('_footer.html');?>

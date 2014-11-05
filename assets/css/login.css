@@ -1,6 +1,3 @@
-body {
-	font: 1em/150% Arial, Helvetica, sans-serif;
-}
 a {
 	color: #669;
 	text-decoration: none;
@@ -295,17 +292,17 @@ img {
 .fl-span{color: #666;}
 #sendbtn{
 	display: block;
-	height: 40px;
-	line-height: 40px;
+	height: 50px;
+	line-height: 50px;
 	vertical-align: middle;
 	text-align: center;
 	width: 140px;
 	border: 1px solid #d1d1d1;
 	border-radius: 3px;
-	color: #006699;
+	color: #000000;
 	font-weight: bold;
 	background: #eee;
 	text-indent: 0;
 	cursor:pointer;
-	font-size: 10px;
+	font-size: 13px;
 }

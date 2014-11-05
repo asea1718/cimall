@@ -97,7 +97,7 @@ function query(name, value){
   function search(){
     
     var kw = $.trim($('#destoon_kw').val());      
-    if(kw == '请输入您所在的小区地址' || kw == '')
+    if(kw == '请输入你要找的超市名称' || kw == '')
       return false;
     else{
       var gourl = "<?php echo site_url('store/search');?>"+'/'+decodeURIComponent(kw);
@@ -110,11 +110,11 @@ function query(name, value){
   <div class="ditu-so">
     <div class="ditu-so1">
       
-        <input name="keyword" id="destoon_kw" type="text" class="dituu" value="请输入您所在的小区地址" onfocus="if(this.value=='请输入您所在的小区地址') this.value='';" onkeyup="STip(this.value);"  onkeydown="javascript:if(event.keyCode==13)search();"/>		
+        <input name="keyword" id="destoon_kw" type="text" class="dituu" value="请输入你要找的超市名称" onfocus="if(this.value=='请输入你要找的超市名称') this.value='';" onkeyup="STip(this.value);"  onkeydown="javascript:if(event.keyCode==13)search();"/>		
 		   <button class="qued searchbutton"  onclick="search()"></button> 
       
       <div class="ditu-anniu">
-        <a href=""><img src="<?php echo base_url().MIMG;?>souso-anniu.jpg"></a>
+        <a href=""><img src="<?php echo base_url().MIMG;?>souso-anniu.png"></a>
       </div>
     </div>
   </div> 
@@ -123,7 +123,7 @@ function query(name, value){
 <div class="ditu-sou"id="jj11" >
 <ul>
   <?php for($i=0;$i<7;$i++){?>
-  <li><div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村231号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+  <li><div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村231号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
   </li>
   <?php }?>
 
@@ -132,7 +132,7 @@ function query(name, value){
 <div class="ditu-sou"id="jj22" style="display:none">
 <ul>
   <?php for($i=0;$i<7;$i++){?>
-  <li><div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村232号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+  <li><div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村232号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
 
   </li>
   <?php }?>
@@ -143,7 +143,7 @@ function query(name, value){
 <ul>
   <?php for($i=0;$i<7;$i++){?>
   <li>
-    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村233号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村233号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
   </li>
   <?php }?>
 
@@ -153,7 +153,7 @@ function query(name, value){
 <ul>
   <?php for($i=0;$i<7;$i++){?>
   <li>
-    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村234号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村234号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
   </li>
   <?php }?>
 </ul>
@@ -162,7 +162,7 @@ function query(name, value){
 <ul>
 <?php for($i=0;$i<7;$i++){?>
   <li>
-    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村235号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村235号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
   </li>
   <?php }?>
 </ul>
@@ -171,7 +171,7 @@ function query(name, value){
 <ul>
 <?php for($i=0;$i<7;$i++){?>
   <li>
-    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村236号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.jpg" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
+    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村236号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
   </li>
   <?php }?>
 </ul>
@@ -180,4 +180,4 @@ function query(name, value){
 </div>
 
 
-<?php $this->load->view('_footer.html');?>
+<?php $this->load->view('_footer_index.html');?>
