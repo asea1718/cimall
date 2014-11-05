@@ -9,45 +9,30 @@
 </head>
  <body>
  <?php $this->load->view('_top.html');?>
-<div id="pagewrap"> 
-	<div id="content" class="reg-box"> 
-		
-		<div id="step" class="stepbar">
-			<div class="reg-title">
-				 <i class="phone"></i><a href="#" target="_top" title="" class="f-reg-phone">手机注册</a> 
-		
-			</div>
+<!-- denglu start -->
+<div class="denglu-g">
+<form action="<?php echo site_url('home/doRegister');?>" method="post">
+<ul>
+<h1></h1>
+<li>手机号：<input type="text" name="accountName" class="yonghumin" placeholder="请输入手机号码"></li>
+<li style="border:none">
+ <input type="text" name="captchaCode" class="yzm" id="captcha1" placeholder="请输入验证码">
+<span onclick="sendPhone()" id="sendbtn" class="denglu">获取手机验证码</span>
+</li>
 
-		</div>
+<li>设置密码：<input  type="text" class="mima" name="accountPasswd" placeholder="6-20个大小写英文字母、符号或数字"></li>
+<li>确定密码：<input  type="text" class="mima" name="re_accountPasswd" placeholder="请再次输入密码"></li>
+<li>用户地址：<input type="text" name="address" class="mima" placeholder="请输入您的地址"></li>
+<li style="border:none;margin-left:-16px;">
+<input id="clause" type="checkbox" name="agree" value="1" /> <label for="clause">我已阅读并同意 <a href="index.php?app=article&amp;act=system&amp;code=eula" target="_blank" class="agreement">《邑客服务协议》</a></label>
+</li>
+<h2>   <input type="submit" name="Submit" value="" id="SubmitStatic" class="zhucc"></h2>
+</ul>
+</form>
 
-		<div class="login-box f-reg">
-			<form action="<?php echo site_url('home/doRegister');?>" method="post">
-				<div style="height: 10px;"></div>
-				<div class="in-field">
-					<span class="fl-span">手机号：</span><input type="text" name="accountName" class="fl-input" placeholder="请输入手机号码">
-				</div>
-				<div class="in-fieldcode">
-					<span class="fl-span">验证码：</span><input type="text" name="captchaCode" class="fl-inputcode" placeholder="输入验证码"><div class="reg-check-submit">
-						<span onclick="sendPhone()" id="sendbtn">点击发送验证码到手机</span>
-				</div>
-				</div>
-				<div class="in-field">
-					<span class="fl-span">设置密码：</span><input type="password" name="accountPasswd" class="fl-input" placeholder="请输入密码">
-				</div>
-				<div class="in-field">
-					<span class="fl-span">重复密码：</span><input type="password" name="re_accountPasswd" class="fl-input" placeholder="请再次输入密码">
-				</div>
-				<div class="in-field">
-					<span class="fl-span">用户地址：</span><input type="text" name="address" class="fl-input" placeholder="请输入您的地址">
-				</div>
-				<div class="field reg-submit">
-				<input type="checkbox" id="agreen_chk"/>我已经阅读并同意《协议》<br/>
-					<button type="submit" class="Submit" tabindex="5" id="SubmitStatic">注册</button>
-				</div>
-			</form>
-		</div>
-	</div> 
-</div> 
+</div>
+ <!-- denglu end -->
+
 <script type="text/javascript">
 	function sendPhone(){
 		var url = "<?php echo site_url('home/sendPhone');?>";
