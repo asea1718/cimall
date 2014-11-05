@@ -42,9 +42,35 @@
    
   }
 </script>
+<style type="text/css">
+    .fenlei-nav{position: relative;}
+    .show-fenlei{display: block;width: 200px;position: absolute;left: 0;top: 35px;z-index: 99;background-color: #e5e5e5;}
+    .show-fenlei li{cursor: pointer;width: 200px;height: 40px;line-height: 40px;border-bottom: 1px solid #f5c620;}
+    .show-fenlei li a{display: inline;padding-left: 50px;}
+    .show-fenlei li:hover{background-color: #66CCCC;}
+</style>
+<script type="text/javascript">
+    function show_fl(){
+        if($(".show-fenlei").css('display') == 'block'){
+            $(".show-fenlei").css('display', 'none');
+        }else{
+            $(".show-fenlei").css('display', 'block');
+        }
+        //$(".show-fenlei").css('display', 'block');
+    }
+</script>  
 <div class="cp-top2">
     <div class="cp-dh">
-        <a href="" class="fl"><img src="<?php echo base_url().MIMG;?>3_33.jpg"></a>
+        <div class="fenlei-nav">
+            <a href="javascript:;" onclick="show_fl()" class="fl"><img src="<?php echo base_url().MIMG;?>3_33.jpg"></a>
+            <div class="show-fenlei">
+                <ul>
+                    <li onclick="show_good()"><a href="javascript:;">1F&nbsp;生鲜</a></li>
+                    <li onclick="show_good()"><a href="javascript:;">2F&nbsp;粮油</a></li>
+                    <li onclick="show_good()"><a href="javascript:;">3F&nbsp;调料</a></li>
+                </ul>
+            </div>
+        </div>
         <a href="<?php echo site_url('store');?>" class="shouye">首页</a>
         <div class="cp-from">            
             <input name="keyword" type="text" id="p_kw" class="cp-from1" value="搜索您要买的商品" onfocus="if(this.value=='搜索您要买的商品') this.value='';" onkeyup="STip(this.value);" onkeydown="javascript:if(event.keyCode==13)gsearch(<?php echo $storeid;?>);"/>           
@@ -56,32 +82,7 @@
         <a href="" class="fl m15 l15"><img src="<?php echo base_url().MIMG;?>3_38.jpg"></a>
         <a href="" class="fl m15"><img src="<?php echo base_url().MIMG;?>3_36.jpg"></a>
     </div>    
-    <div class="cp-show">
-        <div class="tmall_box fl">
-            <div id="tmall_nav">
-                <div class="tmall_cat_nav fl">
-                    <ul class="cate_nav">
-                        <li>
-                            <div class="cat_0_nav">
-                                1F&nbsp;生鲜
-                            </div>
-                        </li>
-                        <hr style="border:1px solid #f5c620">
-                        <li>
-                            <div class="cat_1_nav">
-                                2F&nbsp;粮油
-                            </div>
-                        </li>
-                        <hr style="border:1px solid #f5c620">
-                        <li>
-                            <div class="cat_0_nav">
-                                3F&nbsp;调料
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="cp-show">        
         <div class="fenlei-list fr">
             <?php if(!empty($pinfos)){foreach($pinfos as $pinfo){ ?>   
             <ul><!--class : diyi dier-->            
