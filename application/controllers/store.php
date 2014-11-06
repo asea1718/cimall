@@ -32,9 +32,11 @@ class Store extends CI_Controller {
 			);		
 		$rs = $this->yike->getProductTypeList($postdata);
 		$pinfos = array();
+		$fenlei = array();
 		if(!empty($rs['productTypeList'])){
 			foreach($rs['productTypeList'] as $ptl){
-				$ptl = get_object_vars($ptl);				
+				$ptl = get_object_vars($ptl);		
+				$fenlei[] = $ptl;		
 				$postdata1 = array(
 					"productTypeId" => $ptl['productTypeId'],
 				    "nowPage" => 1,
@@ -47,7 +49,8 @@ class Store extends CI_Controller {
 		}
 		$data['storeid'] = (int)$storeid;
 		$data['pinfos'] = $pinfos;
-		//prpre($data);exit;
+		$data['fenlei'] = $fenlei;
+		prpre($data);exit;
 		$this->load->view("store_index.html", $data);
 	}
 
