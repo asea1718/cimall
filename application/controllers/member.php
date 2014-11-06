@@ -77,7 +77,7 @@ class Member extends CI_Controller {
 		$yhq = $this->input->post('yhq');
 		$postdata = array(
 			"userId" => 1,
-    		"couponNo" => $yhq
+    		"couponNo" => $yhq  // 007004406    307004406
 			);		
 		$rs = $this->yike->verifyCoupon($postdata);	
 		// resultCode  0 验证成功 -1 不存在优惠劵  -2 已验证 -3  已使用 -4  取消  -5 过期	
