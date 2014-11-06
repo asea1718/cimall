@@ -4,7 +4,7 @@ class Store extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->library('yike');
-		$this->load->library('postapi');
+		$this->load->library('shopcart');
 	}
 
 	public function index(){	
@@ -27,31 +27,137 @@ class Store extends CI_Controller {
 	 * @return [type]           [array 商品分类+商品信息]
 	 */
 	public function single($storeid = 1){
+		$segments = $this->uri->uri_to_assoc();
+		$storeid = (int)$segments['sid'];
+		$tid = isset($segments['tid']) ? (int)$segments['tid'] : 0;
+
+		$page = isset($segments['page']) ? (int)$segments['page'] : 1;	
+		//每页显示数量
+		$pagecount = 25;
+		$data['page'] = $page;	
+		// 购物车商品
+		$data['carts'] = $this->shopcart->getAllItem();		
+
 		$postdata = array(
 			"storeId" => (int)$storeid
 			);		
 		$rs = $this->yike->getProductTypeList($postdata);
 		$pinfos = array();
 		$fenlei = array();
-		if(!empty($rs['productTypeList'])){
-			foreach($rs['productTypeList'] as $ptl){
-				$ptl = get_object_vars($ptl);		
-				$fenlei[] = $ptl;		
-				$postdata1 = array(
-					"productTypeId" => $ptl['productTypeId'],
-				    "nowPage" => 1,
-				    "pageCount" => 25
-					);
-				$ptl['goods'] = $this->yike->getProductList($postdata1);
+		//有分页 haspage为1，默认为1
+		$data['haspage'] = 1;
+		if($tid == 0){
+			if(!empty($rs['productTypeList'])){
+				foreach($rs['productTypeList'] as $ptl){
+					$ptl = get_object_vars($ptl);		
+					$fenlei[] = $ptl;		
+					$postdata1 = array(
+						"productTypeId" => $ptl['productTypeId'],
+					    "nowPage" => $page,
+					    "pageCount" => $pagecount
+						);
+					$ptl['goods'] = $this->yike->getProductList($postdata1);
 
-				$pinfos[] = $ptl;
+					$pinfos[] = $ptl;
+					$data['haspage'] = 0;
+				}
+			}	
+			$data['url'] = site_url('store/single')."/sid/".$storeid;		
+		}else{
+			if(!empty($rs['productTypeList'])){
+				foreach($rs['productTypeList'] as $ptl){
+					$ptl = get_object_vars($ptl);		
+					$fenlei[] = $ptl;	
+					if($ptl['productTypeId'] == $tid){
+						$postdata1 = array(
+							"productTypeId" => $tid,
+						    "nowPage" => $page,
+					    	"pageCount" => $pagecount
+							);
+						$ptl['goods'] = $this->yike->getProductList($postdata1);
+						// 判断时候还有分页
+						if($ptl['goods']['totalCount'] <= ($page*$pagecount)){
+							$data['haspage'] = 0;
+						}
+						$pinfos[] = $ptl;						
+					}				
+				}
+			}	
+			$data['url'] = site_url('store/single')."/sid/".$storeid.'/tid/'.$tid;		
+		}
+		$data['tid'] = $tid;
+		$data['storeid'] = $storeid;		
+		$data['fenlei'] = $fenlei;
+		$data['pinfos'] = $pinfos;		
+		//prpre($data);exit;
+		$this->load->view("store_index.html", $data);
+	}		
+
+	/**
+	 * 商品详情页
+	 * @return [type] [description]
+	 */
+	public function singleGood(){
+		$segments = $this->uri->uri_to_assoc();
+		if(empty($segments)) 
+			redirect('store');		
+		$data['storeid'] = (int)$segments['sid'];
+		$tid = (int)$segments['tid'];
+		$pid = (int)$segments['pid'];
+					
+		$postdata1 = array(
+			"productTypeId" => $tid,
+		    "nowPage" => 1,
+		    "pageCount" => 25
+			);
+		$ptl = $this->yike->getProductList($postdata1);
+		$good = array();
+		if(!empty($ptl['productList'])){
+			foreach($ptl['productList'] as $v){
+				$v = get_object_vars($v);
+				if($v['productId'] == $pid){
+					$good = $v;
+					break;
+				}
 			}
 		}
-		$data['storeid'] = (int)$storeid;
-		$data['pinfos'] = $pinfos;
-		$data['fenlei'] = $fenlei;
-		prpre($data);exit;
-		$this->load->view("store_index.html", $data);
+		
+		$data['good'] = $good;
+		//prpre($data);exit;
+		$this->load->view("goods_index.html", $data);
+	}
+
+	/**
+	 * 商品搜索
+	 */
+	public function goodSearch(){
+		$segments = $this->uri->uri_to_assoc();
+		$kw = urldecode($segments['keyword']);
+		$data['storeid'] = $sid = (int)$segments['sid'];  
+		$page = isset($segments['page']) ? (int)$segments['page'] : 1;	
+		//每页显示数量
+		$pagecount = 25;
+		$data['page'] = $page;	
+		//prpre($segments);exit;
+		$postdata = array(
+			"pageCount" => $pagecount,
+		    "nowPage" => $page,
+		    "productName" => $kw,
+		    "storeId" =>   $sid
+			);
+		$data['goods'] = $this->yike->getProductListForSearch($postdata);
+		$data['haspage'] = 1;
+		if($data['goods']['totalCount'] <= ($page*$pagecount)){
+			$data['haspage'] = 0;
+		}
+		
+		// 购物车商品
+		$data['carts'] = $this->shopcart->getAllItem();
+
+		$data['url'] = site_url('store/goodSearch')."/sid/".$sid."/keyword/".$kw;
+
+		//prpre($data);exit;
+		$this->load->view('search_goods.html', $data);
 	}
 
 	/**
@@ -64,21 +170,19 @@ class Store extends CI_Controller {
 	}
 
 	/**
-	 * 商品搜索
+	 * 点击分类返回内容
 	 */
-	public function goodSearch(){
-		$segments = $this->uri->uri_to_assoc();
-		$kw = urldecode($segments['keyword']);
-		$sid = (int)$segments['sid'];
-		//prpre($segments);exit;
+	public function fenlei(){
+		//$storeid = (int)$this->input->post('sid');
+		$tid = (int)$this->input->post('tid');
+		// 购物车商品
+		$data['carts'] = $this->shopcart->getAllItem();	
+
 		$postdata = array(
-			"pageCount" => 25,
+			"productTypeId" => $tid,
 		    "nowPage" => 1,
-		    "productName" => $kw,
-		    "storeId" => $sid
+		    "pageCount" => 25
 			);
-		$data['goods'] = $this->yike->getProductListForSearch($postdata);
-		prpre($data['goods']);exit;
-		$this->load->view('aa.html', $data);
+		$ptl['goods'] = $this->yike->getProductList($postdata);
 	}
 }

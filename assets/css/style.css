@@ -176,7 +176,7 @@ a:hover{color:#338ccb; text-decoration:nounder;}
 .cp-top1-R p{height:70px;float:left;color:#34bcea;font-size:18px;line-height:35px;margin:19px 18px}
 .cp-tel{background:url(../images/3_27.jpg) no-repeat left;padding:0 0 0 35px}
 .cp-top2{width:1200px;margin:0 auto;overflow:hidden;padding-bottom:10px}
-.cp-dh{background:#34bcea;width:1200px;height:35px}
+.cp-dh{background:#34bcea;width:1200px;height:35px;margin: 0 auto;}
 .shouye{width:200px;height:34px;background:#aee4f7;display:block;float:left;text-align:center;line-height:34px;font-size:14px}
 
 .cp-from{float:left;width:440px;height:22px;margin:6px 0 0 50px;border:1px solid #9adef5;background:url(../images/cp-form.jpg) no-repeat left;}
@@ -188,6 +188,14 @@ a:hover{color:#338ccb; text-decoration:nounder;}
 .cp-show{width:1200px;margin:0 auto;overflow:hidden;position: relative;}
 .cp-show ul{float:left;}
 .cp-show ul li{float:left;width:198px;height:250px;border:1px solid #ccc;text-align:center;margin:2px 0}
+/**/
+.fenlei-nav{position: relative;}
+.show-fenlei{display: none;width: 200px;position: absolute;left: 0;top: 35px;z-index: 99;background-color: #e5e5e5;}
+.show-fenlei li{width: 200px;height: 40px;line-height: 40px;border-bottom: 1px solid #f5c620;}
+.show-fenlei li a{display: block;}
+.show-fenlei li a span{display: inline;padding-left: 50px;}
+.show-fenlei li:hover{background-color: #66CCCC;}
+/**/
 
 .diyi{background:#f5c620;color:#fff;}
 .dier{background:#68c2ee;color:#fff;}
@@ -587,24 +595,7 @@ margin: 8px 0 0 25px;
 #succeed .success-b{color:#999;font:12px/150% Arial,Verdana,"\5b8b\4f53";height:auto}
 #succeed .success-b h3{font:normal 24px/40px \5fae\8f6f\96c5\9ed1;color:#7ABD54;}
 
-/*****fen lei********/
-.fenlei-ls{width: 1000px;}
-.tmall_box{width:200px;margin:25px auto;position: absolute;left: 0;top:10px;}
-.tmall_box .menu ul{height:29px;line-height:29px;border-bottom:1px #CCCCCC solid;padding-left:190px;}
-.tmall_box .menu ul li{float:left;}
-.tmall_box .menu ul li a{color:#000000;font-size:14px;font-weight:bold;text-decoration:none;padding:0 20px 0 20px;}
-.tmall_nav { width: 200px;}
 
-.tmall_cat_nav{width:200px;height:537px;position:relative;top:-30px;}
-.tmall_cat_nav .tmall_mod_title{width:200px;height:30px;line-height:30px;color:#fff;text-align:center;font-weight:bold;background:#000000;}
-
-.cate_nav{font-size:12px;color:#000000;}
-.cate_nav li{height:35px;line-height:35px;font-family:'宋体';}
-.cate_nav li a{color:#000000;font-size:12px;text-decoration:none;}
-.cate_nav li a:hover{text-decoration:underline;}
-
-.cate_nav li .cat_0_nav{background:#e5e5e5;}
-.cate_nav li .cat_1_nav{background:#d4d4d4;}
 
 /* 添加注册 */
 .denglu-g{width:640px;height:600px;margin:0 auto;margin-top:45px;margin-bottom:35px;background:#fff;border:5px solid #ccc}
@@ -637,3 +628,28 @@ margin: 8px 0 0 25px;
 .wrw-dd{width:352px;height:46px;text-align:center;background:url(../images/wrw-dd.jpg) no-repeat;float:left;margin:15px 0 5px 30px;border:none;cursor:pointer;}
 .wrw-wjmm{float:right;color:#ccc}
 .wrw-wjmm:hover{color:red}
+
+/*******分页********/
+.m-page{width: 1200px;margin: 20px auto;}
+.m-page ul{margin-left: 400px;}
+.m-page li{float: left;height: 30px;line-height: 30px;margin-right: 10px;}
+.m-page li a{display: block;padding: 0 10px;border: 1px solid #c3c3c3;}
+/****商品购物车出现数字******/
+.g-bottom{border-top: 1px solid #68c2ee;
+			text-align: left;
+			line-height: 22px;
+			padding-left: 10px;
+			color: #4699c2;
+			padding-top: 10px;
+			margin-top: 5px;
+	}
+	.g-price span{color: red;
+			font-size: 14px;
+			margin-left: 15px;
+			font-weight: bold;
+	} 
+	.g-cart{padding: 10px 10px 0 0;position: relative;}
+	.g-cart-num{position: absolute;right: 15px;top:0;font-size: 14px;font-weight: bold;color: red;}
+/****验证优惠券*****/
+.yanzheng{display: block;height: 30px;text-align: center;vertical-align: middle;}
+.yanzheng .yz-input{margin-right: 20px;height: 30px;line-height: 30px;display: inline;}	

@@ -50,8 +50,8 @@
 		<?php $totalprice=0; if(!empty($items)){foreach($items as $item){?>
 		<tr>
 			<td class="fore1" style="width: 406px;">
-				<div class="fl"><a href="<?php echo site_url('good/single').'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><img src="<?php echo $item['img'];?>" height="50" width="50"></a></div>
-				<div style="padding-top: 5px;"><a href="<?php echo site_url('good/single').'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><?php echo $item['name'];?></a></div>
+				<div class="fl"><a href="<?php echo site_url('store/singleGood').'/sid/'.$item['sid'].'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><img src="<?php echo $item['img'];?>" height="50" width="50"></a></div>
+				<div style="padding-top: 5px;"><a href="<?php echo site_url('store/singleGood').'/sid/'.$item['sid'].'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><?php echo $item['name'];?></a></div>
 			</td>
 			<td class="fore2" style="text-align: center;">￥<?php echo $item['price'];?></td>
 			<td class="fore3" style="text-align: center;">x <?php echo $item['num'];?></td>
@@ -73,15 +73,18 @@
 
 	function yzyhq(){
 		var yhq = $.trim($("input[name='yhq']").val());
-		var url = "<?php echo site_url('member/yzyhq');?>";
+		var url = "<?php echo site_url('member/yzyhq1');?>";
 		$.post(
 			url,
 			{yhq:yhq},
-			function(data){
-				alert(decodeURIComponent(data));
+			function(data){							
+				if(data.statuscode == 0 || data.statuscode == -2){
+					html = "<li><span>编号："+data.couponId+"</span><span>类别："+data.stringStatus+"</span><span>使用时间："+data.validTime+"</span><span>金额："+data.couponCash+"元</span></li>";
+					$(html).appendTo("#tp_list_yhq");					
+				}				
 				$(".yanzheng").css('display','none');
 			},
-			'text');
+			'json');
 	}
 </script>
 <div class="jfdh2 clearfix">
@@ -89,12 +92,10 @@
 		<h1>使用已有购物券</h1><a href="javascript:;" onclick="show_yz()"><img src="<?php echo base_url().MIMG;?>tjgwq.jpg"></a>
 	</div>
 	<div class="yanzheng">
-		<input type="text" name="yhq" > <a href="javascript:;" onclick="yzyhq();"><img src="<?php echo base_url().MIMG;?>tijiao.jpg"></a>
+		<input type="text" name="yhq" class="yz-input"> <a href="javascript:;" onclick="yzyhq();"><img src="<?php echo base_url().MIMG;?>tijiao.jpg"></a>
 	</div>
-<ul class="clearfix">
-<li><span>编号：123456789</span><span>类别：积分券</span><span>使用时间：不限时</span><span>金额：5元</span></li>
-
-</ul>
+	<!--添加优惠券-->
+<ul class="clearfix" id="tp_list_yhq"></ul>
 </div>
 
 <div style="margin: 25px auto;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
@@ -116,7 +117,7 @@
 
 </div>
 <div style="margin: 25px auto;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
-<!--
+
 <div class="jfdh2">
 <h2>确认收货地址</h2>
 <div class="jfdh2-1">
@@ -124,7 +125,7 @@
 
 </div>
 </div>
--->
+
 <div class="sjr clear">
 	<h1>确认收货地址</h1>
 <form>

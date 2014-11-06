@@ -24,14 +24,16 @@ class Cart extends CI_Controller {
 	 */
 	public function addCart(){
 		
+		$sid = (int)$this->input->post('sid');
 		$tid = (int)$this->input->post('tid');
 		$pid = (int)$this->input->post('pid');
 		$name = trim($this->input->post('name'));
 		$price = trim($this->input->post('price'));
 		$num = (int)$this->input->post('num');
 		$img = trim($this->input->post('img'));
+		$desc = trim($this->input->post('desc'));
 		# $id,$name,$price,$num,$img
-		$this->shopcart->addItem($tid,$pid,$name,$price,$num,$img);
+		$this->shopcart->addItem($sid,$tid,$pid,$name,$price,$num,$img,$desc);
 		echo 1;
 	}
 	/**
@@ -108,6 +110,16 @@ class Cart extends CI_Controller {
 	 * 去支付页面
 	 */
 	public function toPay(){
+		// 判断是否登录了
+		if(!$this->session->userdata('uphone')){
+			$data = array(
+				'message' => '登陆后才能进行购买！',
+				'time'    => '2',
+				'goto'    => site_url('home/login')
+				);
+			$this->load->view('show_message.html', $data);
+			return;
+		}
 		if(!$this->input->post())
 			redirect('cart');
 		$pids = $this->input->post('p_id');

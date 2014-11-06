@@ -4,6 +4,9 @@ class Member extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->library('yike');
+		if(!$this->session->userdata('uphone')){
+			redirect('home/login');
+		}
 	}
 
 	public function index(){
@@ -63,7 +66,7 @@ class Member extends CI_Controller {
 		$data[] = $this->yike->getCouponList($postdata);
 		}
 		//prpre($data);exit;
-		$this->load->view('shiyongyouhuiquan.html', $data);
+		$this->load->view('wodegouwuquan.html', $data);
 	}
 
 	/*
@@ -109,7 +112,7 @@ class Member extends CI_Controller {
 		$yhq = $this->input->post('yhq');
 		$postdata = array(
 			"userId" => 1,
-    		"couponNo" => 007004406
+    		"couponNo" => $yhq  // 
 			);		
 		$rs = $this->yike->verifyCoupon($postdata);	
 		// resultCode  0 验证成功 -1 不存在优惠劵  -2 已验证 -3  已使用 -4  取消  -5 过期	

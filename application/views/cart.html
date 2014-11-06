@@ -197,8 +197,8 @@ function addNum(id,pid){
   <table cellpadding="0" cellspacing="0" class="gwc_tb2" id="item_tb<?php echo $i;?>">
     <tr>
       <td class="tb2_td1"><input type="checkbox" value="<?php echo $item['id'];?>" checked=checked name="p_id[]" info="newslist" data="<?php echo $item['price']*$item['num'];?>" id="newslist-<?php echo $i;?>" /></td>
-      <td class="tb2_td2"><a href="<?php echo site_url('good/single').'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><img src="<?php echo $item['img'];?>"/></a></td>
-      <td class="tb2_td3"><a href="<?php echo site_url('good/single').'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><?php echo $item['name'];?></a></td>
+      <td class="tb2_td2"><a href="<?php echo site_url('store/singleGood').'/sid/'.$item['sid'].'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><img src="<?php echo $item['img'];?>"/></a></td>
+      <td class="tb2_td3"><a href="<?php echo site_url('store/singleGood').'/sid/'.$item['sid'].'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><?php echo $item['name'];?></a></td>
       <td class="tb1_td4"><span id="sprice<?php echo $i;?>"><?php echo $item['price'];?></span></td>
       <td class="tb1_td5">
         <input id="min<?php echo $i;?>" name="" onclick="decNum(<?php echo $i;?>,<?php echo $item['id'];?>)" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />

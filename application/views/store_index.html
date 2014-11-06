@@ -17,6 +17,48 @@
 <body>
 
 <?php $this->load->view('_top.html');?>
+<script type="text/javascript">
+  function gsearch(sid){    
+    var kw = $.trim($('#p_kw').val());      
+    if(kw == '搜索您要买的商品' || kw == '')
+      return false;
+    else{
+      var gourl = "<?php echo site_url('store/goodSearch');?>"+'/sid/'+sid+'/keyword/'+decodeURIComponent(kw);
+      window.location.href = gourl;        
+    }    
+  }
+
+  function show_fl(){
+        if($(".show-fenlei").css('display') == 'block'){
+            $(".show-fenlei").css('display', 'none');
+        }else{
+            $(".show-fenlei").css('display', 'block');
+        }
+        //$(".show-fenlei").css('display', 'block');
+    }
+    /**添加购物车****/
+    function addCart(sid,tid,pid,name,price,desc){
+        var gourl = "<?php echo site_url('cart/finishCart');?>";
+        var url = "<?php echo site_url('cart/addCart');?>";
+        var num = $("#g-num"+pid).text();
+        if(num == '') num=0;
+        //alert(num);return false;
+        var img = "http://cimall.dev/assets/images/3_37.jpg";
+        $.post(
+            url,
+            {sid:sid,tid:tid,pid:pid,name:name,price:price,num:1,img:img},
+            function(data){
+                if(data == 1){
+                    num = parseInt(num)+1;
+                    //alert(num);
+                   $("#g-num"+pid).text(num);
+                }                    
+                else
+                    alert('添加购物车失败！');
+            },
+            'text');        
+    }
+</script>
 <div class="cp-top1">
     <div class="cp-top1-L">
     	<a href="<?php echo site_url('store');?>"><img src="<?php echo base_url().MIMG;?>3_07.png"  class="cpp-logo" width="96" height="96" /></a><h1>比邻便利超市</h1>
@@ -27,74 +69,99 @@
         <p>营业时间10:00-22:00</br>普陀曹杨路曹杨2村236号</p>
         <p class="cp-tel">15950410056</br>15950410056</p>
         <a href="<?php echo site_url('cart');?>" title="购物车"><img src="<?php echo base_url().MIMG;?>3_24.jpg" style="margin:20px 0 0 45px"></a>
-    </div>
-</div>  
-<script type="text/javascript">
-  function gsearch(sid){
-    
-    var kw = $.trim($('#p_kw').val());      
-    if(kw == '搜索您要买的商品' || kw == '')
-      return false;
-    else{
-      var gourl = "<?php echo site_url('store/goodSearch');?>"+'/sid/'+sid+'/keyword/'+decodeURIComponent(kw);
-      window.location.href = gourl;        
-    }       
-   
-  }
-</script>
-<style type="text/css">
-    .fenlei-nav{position: relative;}
-    .show-fenlei{display: block;width: 200px;position: absolute;left: 0;top: 35px;z-index: 99;background-color: #e5e5e5;}
-    .show-fenlei li{cursor: pointer;width: 200px;height: 40px;line-height: 40px;border-bottom: 1px solid #f5c620;}
-    .show-fenlei li a{display: inline;padding-left: 50px;}
-    .show-fenlei li:hover{background-color: #66CCCC;}
-</style>
-<script type="text/javascript">
-    function show_fl(){
-        if($(".show-fenlei").css('display') == 'block'){
-            $(".show-fenlei").css('display', 'none');
-        }else{
-            $(".show-fenlei").css('display', 'block');
-        }
-        //$(".show-fenlei").css('display', 'block');
-    }
-</script>  
-<div class="cp-top2">
-    <div class="cp-dh">
-        <div class="fenlei-nav">
-            <a href="javascript:;" onclick="show_fl()" class="fl"><img src="<?php echo base_url().MIMG;?>3_33.jpg"></a>
-            <div class="show-fenlei">
-                <ul>
-                    <li onclick="show_good()"><a href="javascript:;">1F&nbsp;生鲜</a></li>
-                    <li onclick="show_good()"><a href="javascript:;">2F&nbsp;粮油</a></li>
-                    <li onclick="show_good()"><a href="javascript:;">3F&nbsp;调料</a></li>
-                </ul>
-            </div>
-        </div>
-        <a href="<?php echo site_url('store');?>" class="shouye">首页</a>
-        <div class="cp-from">            
-            <input name="keyword" type="text" id="p_kw" class="cp-from1" value="搜索您要买的商品" onfocus="if(this.value=='搜索您要买的商品') this.value='';" onkeyup="STip(this.value);" onkeydown="javascript:if(event.keyCode==13)gsearch(<?php echo $storeid;?>);"/>           
-            <button class="cp-from2" onclick="gsearch(<?php echo $storeid;?>)">搜索</button>           
-        </div> 
-
-
-
-        <a href="" class="fl m15 l15"><img src="<?php echo base_url().MIMG;?>3_38.jpg"></a>
-        <a href="" class="fl m15"><img src="<?php echo base_url().MIMG;?>3_36.jpg"></a>
     </div>    
+</div>
+
+<div class="cp-dh clearfix">
+    <div class="fenlei-nav">
+        <a href="javascript:;" onclick="show_fl()" class="fl"><img src="<?php echo base_url().MIMG;?>3_33.jpg"></a>
+        <div class="show-fenlei">
+            <ul>
+                <li><a href="<?php echo site_url('store/single').'/sid/'.$storeid;?>"><span>全部分类</span></a></li>
+                <?php foreach($fenlei as $k => $fl): ?>
+                <li><a href="<?php echo site_url('store/single').'/sid/'.$storeid.'/tid/'.$fl['productTypeId'];?>"><span><?php echo ++$k;?>F&nbsp;<?php echo $fl['name'];?></span></a></li>
+                <?php endforeach; ?>             
+            </ul>
+        </div>
+    </div>
+    <a href="<?php echo site_url('store');?>" class="shouye">首页</a>
+    <div class="cp-from">            
+        <input name="keyword" type="text" id="p_kw" class="cp-from1" value="搜索您要买的商品" onfocus="if(this.value=='搜索您要买的商品') this.value='';" onkeyup="STip(this.value);" onkeydown="javascript:if(event.keyCode==13)gsearch(<?php echo $storeid;?>);"/>           
+        <button class="cp-from2" onclick="gsearch(<?php echo $storeid;?>)">搜索</button>           
+    </div> 
+
+
+
+    <a href="" class="fl m15 l15"><img src="<?php echo base_url().MIMG;?>3_38.jpg"></a>
+    <a href="" class="fl m15"><img src="<?php echo base_url().MIMG;?>3_36.jpg"></a>
+</div>   
+
+<div class="cp-top2 clearfix">       
     <div class="cp-show">        
-        <div class="fenlei-list fr">
-            <?php if(!empty($pinfos)){foreach($pinfos as $pinfo){ ?>   
+        <div class="fenlei-list">
+            <?php $i=0; if(!empty($pinfos)){foreach($pinfos as $pinfo){$i++; ?>   
             <ul><!--class : diyi dier-->            
-                <li class="diyi"><h1 class="wjy">1F</h1><h2 class="wjy1"><?php echo $pinfo['name'];?></h2><h3 class="wjy2"><?php echo $pinfo['shortDescription'];?></h3></li>            
+                <li class="diyi"><h1 class="wjy"><?php echo $i;?>F</h1><h2 class="wjy1"><?php echo $pinfo['name'];?></h2><h3 class="wjy2"><?php echo $pinfo['shortDescription'];?></h3></li>            
                 <?php if(!empty($pinfo['goods']['productList'])){foreach($pinfo['goods']['productList'] as $good){?>
                 <?php $good = get_object_vars($good);?>
-                <li><a href="<?php echo site_url('good/single').'/tid/'.$good['productTypeId'].'/pid/'.$good['productId'];?>"><img src="<?php echo base_url().MIMG;?>3_37.jpg" style="width:175px;height:173px"></a><p><?php echo $good['name'];?></br><del>&yen;<?php echo $good['price'];?></del><span>&yen;<?php echo $good['price'];?>元</span><a href="<?php echo site_url('good/single').'/tid/'.$good['productTypeId'].'/pid/'.$good['productId'];?>" class="gouwuche"><img src="<?php echo base_url().MIMG;?>3_41.jpg"></a></p></li>
+                <li>
+                    <a href="<?php echo site_url('store/singleGood').'/sid/'.$storeid.'/tid/'.$good['productTypeId'].'/pid/'.$good['productId'];?>"><img src="<?php echo base_url().MIMG;?>3_37.jpg" style="width:175px;height:173px"></a>
+                    <div class="g-bottom">
+                        <div class="g-price fl">
+                            <?php echo $good['name'];?>
+                            </br>
+                            <del>&yen;<?php echo $good['price'];?></del>
+                            <span>&yen;<?php echo $good['price'];?>元</span>
+                        </div>
+                        <div class="g-cart fr">
+                            <a href="javascript:;" onclick="addCart(<?php echo $storeid?>,<?php echo $good['productTypeId'];?>,<?php echo $good['productId'];?>,'<?php echo $good['name'];?>','<?php echo $good['price'];?>','<?php echo $good['description'];?>')">
+                                <img src="<?php echo base_url().MIMG.'3_41.jpg';?>">
+                            </a>
+                            <?php 
+                                $shownum = 0;
+                                if(array_key_exists($good['productId'], $carts)){
+                                    $shownum = $carts[$good['productId']]['num'];
+                                }
+                            ?>
+                            <div class="g-cart-num"><span id="g-num<?php echo $good['productId'];?>"><?php echo $shownum==0?'':$shownum;?></span></div>
+                        </div>                  
+                    </div>
+                </li>
                 <?php }} ?>         
             </ul>
             <?php }} ?>
         </div> 
 	</div>
 </div> 
+
+<?php if($page == 1 && $haspage == 1){?>
+<div class="m-page">
+    <ul class="clearfix">
+    <?php if($page == 1){?>     
+        <li><a>1</a></li>
+        <li><a href="<?php echo $url.'/page/'.($page+1);?>">2</a></li>      
+    <?php }elseif($page >1 && $page < 6){?>
+        <li><a  href="<?php echo $url.'/page/'.($page-1);?>">上一页</a></li>   
+        <?php for($i=1;$i<=$page;$i++){?>
+        <?php if($i!=$page){?>  
+        <li><a href="<?php echo $url.'/page/'.($i);?>"><?php echo $i;?></a></li>        
+        <?php }else{?>
+        <li><a><?php echo $i;?></a></li>
+        <?php }}?>              
+    <?php }else{?>
+        <li><a  href="<?php echo $url.'/page/'.($page-1);?>">上一页</a></li>
+        <li>...</li>    
+        <?php for($i=($page-4);$i<$page;$i++){?>            
+        <li><a href="<?php echo $url.'/page/'.($i);?>"><?php echo $i;?></a></li>
+        <?php }?>
+        <li><a><?php echo $page;?></a></li>                 
+    <?php }?>
+    <?php if($haspage == 1){?>
+        <li>...</li>
+        <li><a href="<?php echo $url.'/page/'.($page+1);?>">下一页</a></li>
+    <?php }?>
+    </ul>
+</div>
+<?php }?>
 
 <?php $this->load->view('_footer.html');?>

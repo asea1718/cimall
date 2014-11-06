@@ -13,14 +13,93 @@
 
 <body>
 <?php $this->load->view('_top.html');?>
-
+<script type="text/javascript">
+	 /**添加购物车****/
+    function addCart(sid,tid,pid,name,price,desc){
+        var gourl = "<?php echo site_url('cart/finishCart');?>";
+        var url = "<?php echo site_url('cart/addCart');?>";
+        var num = $("#g-num"+pid).text();
+        if(num == '') num=0;
+        //alert(num);return false;
+        var img = "http://cimall.dev/assets/images/3_37.jpg";
+        $.post(
+            url,
+            {sid:sid,tid:tid,pid:pid,name:name,price:price,num:1,img:img},
+            function(data){
+                if(data == 1){
+                    num = parseInt(num)+1;
+                    //alert(num);
+                   $("#g-num"+pid).text(num);
+                }                    
+                else
+                    alert('添加购物车失败！');
+            },
+            'text');        
+    }
+</script>
 <div class="cp-show">
 		<ul>
-			<?php for($i=0;$i<10;$i++){?>
-			<li><a href="<?php echo site_url('good/single/88');?>"><img src="<?php echo base_url().MIMG.'3_37.jpg';?>" style="width:175px;height:173px"></a><p>【中盐】中盐125克碘盐</br><del>&yen;50.0</del><span>&yen;50.0元</span><a href="<?php echo site_url('good/single/88');?>" class="gouwuche"><img src="<?php echo base_url().MIMG.'3_41.jpg';?>"></a></p></li>
-			<?php }?>
+			<?php if(!empty($goods['productList'])){foreach($goods['productList'] as $good){?>
+			<?php $good = get_object_vars($good);?>
+			<li>
+				<a href="<?php echo site_url('store/singleGood').'/sid/'.$storeid.'/tid/'.$good['productTypeId'].'/pid/'.$good['productId'];?>"><img src="<?php echo base_url().MIMG.'3_37.jpg';?>" style="width:175px;height:173px"></a>
+				<div class="g-bottom">
+					<div class="g-price fl">
+						<?php echo $good['name'];?>
+						</br>
+						<del>&yen;<?php echo $good['price'];?></del>
+						<span>&yen;<?php echo $good['price'];?>元</span>
+					</div>
+					<div class="g-cart fr">
+						<a href="javascript:;" onclick="addCart(<?php echo $storeid?>,<?php echo $good['productTypeId'];?>,<?php echo $good['productId'];?>,'<?php echo $good['name'];?>','<?php echo $good['price'];?>','<?php echo $good['description'];?>')">
+                                <img src="<?php echo base_url().MIMG.'3_41.jpg';?>">
+                            </a>
+						<?php 
+                            $shownum = 0;
+                            if(array_key_exists($good['productId'], $carts)){
+                                $shownum = $carts[$good['productId']]['num'];
+                            }
+                        ?>
+						<div class="g-cart-num">
+							<span id="g-num<?php echo $good['productId'];?>"><?php echo $shownum==0?'':$shownum;?></span>
+						</div>
+					</div>					
+				</div>
+			</li>
+			<?php }} ?>
 		</ul>
 
 </div>
+
+<?php if($page == 1 && $haspage == 1){?>
+<div class="m-page">
+	<ul class="clearfix">
+	<?php if($page == 1){?>		
+		<li><a>1</a></li>
+		<li><a href="<?php echo $url.'/page/'.($page+1);?>">2</a></li>		
+	<?php }elseif($page >1 && $page < 6){?>
+		<li><a  href="<?php echo $url.'/page/'.($page-1);?>">上一页</a></li>	
+		<?php for($i=1;$i<=$page;$i++){?>
+		<?php if($i!=$page){?>	
+		<li><a href="<?php echo $url.'/page/'.($i);?>"><?php echo $i;?></a></li>		
+		<?php }else{?>
+		<li><a><?php echo $i;?></a></li>
+		<?php }}?>				
+	<?php }else{?>
+		<li><a  href="<?php echo $url.'/page/'.($page-1);?>">上一页</a></li>
+		<li>...</li>	
+		<?php for($i=($page-4);$i<$page;$i++){?>			
+		<li><a href="<?php echo $url.'/page/'.($i);?>"><?php echo $i;?></a></li>
+		<?php }?>
+		<li><a><?php echo $page;?></a></li>					
+	<?php }?>
+	<?php if($haspage == 1){?>
+		<li>...</li>
+		<li><a href="<?php echo $url.'/page/'.($page+1);?>">下一页</a></li>
+	<?php }?>
+	</ul>
+</div>
+<?php }?>
+
 
 <?php $this->load->view('_footer.html');?>
