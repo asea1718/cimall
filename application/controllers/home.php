@@ -68,24 +68,24 @@ class Home extends CI_Controller {
 				);
 			$this->session->set_userdata($user);			
 			$data = array(
-			'message' => '登陆成功！',
-			'time'    => '2',
-			'goto'    => $backurl
-			);
+				'message' => '登陆成功！',
+				'time'    => '2',
+				'goto'    => $backurl
+				);
 			$this->load->view('show_message.html', $data);
 		}elseif($rs['resultCode'] == -1){
 			$data = array(
-			'message' => '用户名或密码不正确！',
-			'time'    => '2',
-			'goto'    => site_url('home/login').'?'.$backurl
-			);
+				'message' => '用户名或密码不正确！',
+				'time'    => '2',
+				'goto'    => site_url('home/login').'?'.$backurl
+				);
 			$this->load->view('show_message.html', $data);
 		}elseif($rs['resultCode'] == -2){
 			$data = array(
-			'message' => '验证码不正确！',
-			'time'    => '2',
-			'goto'    => site_url('home/login').'?'.$backurl
-			);
+				'message' => '验证码不正确！',
+				'time'    => '2',
+				'goto'    => site_url('home/login').'?'.$backurl
+				);
 			$this->load->view('show_message.html', $data);
 		}
 		
@@ -100,7 +100,13 @@ class Home extends CI_Controller {
 				'uphone' => ''
 				);
 		$this->session->unset_userdata($user);
-		redirect('home');
+		$backurl = $_SERVER['QUERY_STRING'];
+		$data = array(
+			'message' => '退出成功！',
+			'time'    => '1',
+			'goto'    => $backurl
+			);
+		$this->load->view('show_message.html', $data);
 	}
 
 	/*

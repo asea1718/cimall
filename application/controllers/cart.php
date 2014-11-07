@@ -192,7 +192,7 @@ class Cart extends CI_Controller {
 	 */
 	public function toPay(){
 		// 判断是否登录了
-		$backurl = site_url().ltrim($_SERVER['REQUEST_URI'], '/');
+		$backurl = base_url().ltrim($_SERVER['REQUEST_URI'], '/');
 		if(!$this->session->userdata('uphone')){
 			$data = array(
 				'message' => '登陆后才能进行购买！',
