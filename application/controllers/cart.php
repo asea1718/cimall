@@ -5,6 +5,7 @@ class Cart extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
 		$this->load->library('shopcart');
+		$this->load->library('yike');
 	}
 
 	public function index(){
@@ -34,7 +35,10 @@ class Cart extends CI_Controller {
 		$desc = trim($this->input->post('desc'));
 		# $id,$name,$price,$num,$img
 		$this->shopcart->addItem($sid,$tid,$pid,$name,$price,$num,$img,$desc);
-		echo 1;
+		$item = $this->shopcart->getItem($pid);
+		$rt['num'] = $item['num'];
+		$rt['sumnum'] = $this->shopcart->getNum();		
+		echo json_encode($rt, true);
 	}
 	/**
 	 * 完成购物车
@@ -91,6 +95,12 @@ class Cart extends CI_Controller {
 			$this->shopcart->decNum($id,1);
 		}
 	}
+	/**
+	 * 获取购物车中商品的总数num
+	 */
+	public function getAllNum(){
+		echo $this->shopcart->getNum();
+	}
 
 	/**
 	 * 购买页面
@@ -102,8 +112,79 @@ class Cart extends CI_Controller {
 	/**
 	 * 提交订单
 	 */
-	public function submitOrder(){
-		$this->load->view('tijiao.html');
+	public function delOrder(){
+		//prpre($this->input->post());exit;
+		$pids = $this->input->post('pids');
+		$yhqs = $this->input->post('yhqs');
+		$zffs = $this->input->post('zffs');
+		$pids = $this->input->post('pids');
+
+		$subject = $body = '';
+
+
+		$userid = $this->session->userdata('uid');
+		switch ($zffs) {
+			case 'hdfk': $orderType = 1;break;
+			case  'zfb': $orderType = 2;break;			
+			default:     $orderType = 1;break;
+		}
+
+		# 
+		// 购物车商品
+		$carts = $this->shopcart->getAllItem();	
+		foreach($pids as $id){
+			$orderDetailList[] = array(
+				"productId" => $id,
+            	"count" => $carts[$id]['num']
+				); 
+			$subject .= $carts[$id]['name'];
+			$body .= $carts[$id]['desc'];
+		}		
+
+		# 提交订单
+		$postdata = array(
+			"storeId" => 1,                //便利店ID
+		    "userId" => $userid,           //userId 用户ID
+		    "orderType" => $orderType,     //订单类型1 货到付款 2 在线支付
+		    "subject" => $subject,         //商品名称（多个商品名称可以叠加长度256）
+		    "body" => $body,               //商品描述（多个商品描述可以叠加长度400）
+			"orderStatus" => 0,            //固定值0
+			"orderSource" => 3,            //提交订单来源1 android 2 ios 3 web
+		    "orderDetailList" => $orderDetailList  //订单商品列表
+		    //"couponList" => $couponList             //优惠券列表
+			);
+		if(!empty($yhqs)){			
+			foreach($yhqs as $k => $yhq){				
+				$postdata['couponList'][] = array("couponNo" => $yhq);
+				
+			}
+		}
+		$rs = $this->yike->commitOrder($postdata);
+		prpre($postdata);prpre($rs);exit;
+		# resultCode  0 提交订单成功 -1 异常 -2 加盟店或者商品不存在 -3 优惠
+		if($rs['resultCode'] == 0 || $rs['resultCode'] == -3){
+			foreach($pids as $id){
+				$this->shopcart->delItem($id);
+			}
+			$this->load->view('success_order.html', $rs);
+			return;
+		}elseif($rs['resultCode'] == -2){
+			$data = array(
+			'message' => '加盟店或者商品不存在！',
+			'time'    => '2',
+			'goto'    => site_url('cart')
+			);
+			$this->load->view('show_message.html', $data);
+			return;
+		}else{
+			$data = array(
+			'message' => '提交订单异常！',
+			'time'    => '2',
+			'goto'    => site_url('cart')
+			);
+			$this->load->view('show_message.html', $data);
+			return;
+		}
 	}
 
 	/**
@@ -111,11 +192,12 @@ class Cart extends CI_Controller {
 	 */
 	public function toPay(){
 		// 判断是否登录了
+		$backurl = site_url().ltrim($_SERVER['REQUEST_URI'], '/');
 		if(!$this->session->userdata('uphone')){
 			$data = array(
 				'message' => '登陆后才能进行购买！',
 				'time'    => '2',
-				'goto'    => site_url('home/login')
+				'goto'    => site_url('home/login').'?'.$backurl
 				);
 			$this->load->view('show_message.html', $data);
 			return;

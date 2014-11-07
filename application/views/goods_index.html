@@ -37,7 +37,7 @@
         //$(".show-fenlei").css('display', 'block');
     }
 
-    function addCart(sid,tid,pid,name,price,desc){
+    function addCart_desc(sid,tid,pid,name,price,desc){
         var gourl = "<?php echo site_url('cart/finishCart');?>";
         var url = "<?php echo site_url('cart/addCart');?>";
         var num = $("input[name='input_item_3']").val();
@@ -46,12 +46,12 @@
             url,
             {sid:sid,tid:tid,pid:pid,name:name,price:price,num:num,img:img,desc:desc},
             function(data){
-                if(data == 1)
+                if(data)
                     window.location.href = gourl;
                 else
                     alert('添加购物车失败！');
             },
-            'text');        
+            'json');        
     }
 
 
@@ -64,13 +64,36 @@
             url,
             {sid:sid,tid:tid,pid:pid,name:name,price:price,num:num,img:img,desc:desc},
             function(data){
-                if(data == 1)
+                if(data)
                     window.location.href = buyurl;
                 else
                     alert('添加购物车失败！');
             },
-            'text');
+            'json');
         
+    }
+
+    /**小车添加购物车****/
+    function addCart(sid,tid,pid,name,price,desc){       
+        var url = "<?php echo site_url('cart/addCart');?>";
+        var num = $("#g-num"+pid).text();
+        if(num == '') num=0;
+        //alert(num);return false;
+        var img = "http://cimall.dev/assets/images/3_37.jpg";
+        $.post(
+            url,
+            {sid:sid,tid:tid,pid:pid,name:name,price:price,num:1,img:img,desc:desc},
+            function(data){
+                if(data){
+                    //num = parseInt(num)+1;
+                    //alert(num);
+                   $("#g-num"+pid).text(data.num);
+                   $("#gwc_sum").text(data.sumnum);
+                }                    
+                else
+                    alert('添加购物车失败！');
+            },
+            'json');        
     }
     
 </script>
@@ -83,7 +106,10 @@
         <p><font style="font-size:22px">30元起送</font></br>1000米内30分钟送到</p>
         <p>营业时间10:00-22:00</br>普陀曹杨路曹杨2村236号</p>
         <p class="cp-tel">15950410056</br>15950410056</p>
-        <a href="<?php echo site_url('cart');?>" title="购物车"><img src="<?php echo base_url().MIMG;?>3_24.jpg" style="margin:20px 0 0 45px"></a>
+        <div class="top-gwc fr">
+            <a href="<?php echo site_url('cart');?>" title="购物车"><img src="<?php echo base_url().MIMG;?>3_24.jpg" style="margin:20px 0 0 45px"></a>
+            <div class="top-gwc-num"><span id="gwc_sum"><?php echo $sumnum;?></span></div>
+        </div> 
     </div>    
 </div>
 
@@ -92,13 +118,14 @@
         <a href="javascript:;" onclick="show_fl()" class="fl"><img src="<?php echo base_url().MIMG;?>3_33.jpg"></a>
         <div class="show-fenlei">
             <ul>
-                <li onclick="show_good()"><a href="javascript:;">1F&nbsp;生鲜</a></li>
-                <li onclick="show_good()"><a href="javascript:;">2F&nbsp;粮油</a></li>
-                <li onclick="show_good()"><a href="javascript:;">3F&nbsp;调料</a></li>
+                <li><a href="<?php echo site_url('store/single').'/sid/'.$storeid;?>"><span>全部分类</span></a></li>
+                <?php foreach($fenlei as $k => $fl): ?>
+                <li><a href="<?php echo site_url('store/single').'/sid/'.$storeid.'/tid/'.$fl['productTypeId'];?>"><span><?php echo ++$k;?>F&nbsp;<?php echo $fl['name'];?></span></a></li>
+                <?php endforeach; ?>
             </ul>
         </div>
     </div>
-    <a href="<?php echo site_url('store');?>" class="shouye">首页</a>
+    <a href="<?php echo site_url('store/single').'/sid/'.$storeid;?>" class="shouye">首页</a>
     <div class="cp-from">            
         <input name="keyword" type="text" id="p_kw" class="cp-from1" value="搜索您要买的商品" onfocus="if(this.value=='搜索您要买的商品') this.value='';" onkeyup="STip(this.value);" onkeydown="javascript:if(event.keyCode==13)gsearch(<?php echo $storeid;?>);"/>           
         <button class="cp-from2" onclick="gsearch(<?php echo $storeid;?>)">搜索</button>           
@@ -160,7 +187,7 @@
 					<input id="input_item_3" name="input_item_3" value="1" orig="1" changed="1" onkeyup="change_quantity(2, 3, 2, this);" class="width3" type="text">
 				</div>
 			</div>
-            <a href="javascript:addCart(<?php echo $storeid?>,<?php echo $good['productTypeId'];?>,<?php echo $good['productId'];?>,'<?php echo $good['name'];?>','<?php echo $good['price'];?>','<?php echo $good['description'];?>');" title="加入购物车"><img src="<?php echo base_url().MIMG;?>6_07.jpg"></a>
+            <a href="javascript:addCart_desc(<?php echo $storeid?>,<?php echo $good['productTypeId'];?>,<?php echo $good['productId'];?>,'<?php echo $good['name'];?>','<?php echo $good['price'];?>','<?php echo $good['description'];?>');" title="加入购物车"><img src="<?php echo base_url().MIMG;?>6_07.jpg"></a>
             <a href="javascript:toBuy(<?php echo $storeid?>,<?php echo $good['productTypeId'];?>,<?php echo $good['productId'];?>,'<?php echo $good['name'];?>','<?php echo $good['price'];?>','<?php echo $good['description'];?>');" title="立即购买"><img src="<?php echo base_url().MIMG;?>6_09.jpg"></a>
         </div>
         <div class="cp-neiye2-l-top5">
@@ -183,11 +210,33 @@
     <div class="clear"></div>
 
 	<div class="footmark_title"><h2 class="title">看过本商品的用户还购买过</h2></div>
-	<div class="cp-show">
-		<ul>
-            <?php for($i=0;$i<6;$i++){?>
-			<li><a href=""><img src="<?php echo base_url().MIMG;?>3_37.jpg" style="width:175px;height:173px"></a><p>【中盐】中盐125克碘盐</br><del>&yen;50.0</del><span>&yen;50.0元</span><a href="" class="gouwuche"><img src="<?php echo base_url().MIMG;?>3_41.jpg"></a></p></li>
-			<?php }?>
+	<div class="cp-show clearfix">
+		<ul>            
+            <?php if(!empty($randgoods)): foreach($randgoods as $k => $good): ?>
+			<li>
+                <a href="<?php echo site_url('store/singleGood').'/sid/'.$storeid.'/tid/'.$good['productTypeId'].'/pid/'.$good['productId'];?>"><img src="<?php echo base_url().MIMG;?>3_37.jpg" style="width:175px;height:173px"></a>
+                <div class="g-bottom">
+                    <div class="g-price fl">
+                        <?php echo $good['name'];?>
+                        </br>
+                        <del>&yen;<?php echo $good['price'];?></del>
+                        <span>&yen;<?php echo $good['price'];?>元</span>
+                    </div>
+                    <div class="g-cart fr">
+                        <a href="javascript:;" onclick="addCart(<?php echo $storeid?>,<?php echo $good['productTypeId'];?>,<?php echo $good['productId'];?>,'<?php echo $good['name'];?>','<?php echo $good['price'];?>','<?php echo $good['description'];?>')">
+                            <img src="<?php echo base_url().MIMG.'3_41.jpg';?>">
+                        </a>
+                        <?php 
+                            $shownum = 0;
+                            if(array_key_exists($good['productId'], $carts)){
+                                $shownum = $carts[$good['productId']]['num'];
+                            }
+                        ?>
+                        <div class="g-cart-num"><span id="g-num<?php echo $good['productId'];?>"><?php echo $shownum==0?'':$shownum;?></span></div>
+                    </div>                  
+                </div>
+            </li>
+			<?php endforeach;endif;?>
 		</ul>
 
 </div>

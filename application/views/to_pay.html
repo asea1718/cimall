@@ -11,7 +11,7 @@
 
  <?php $this->load->view('_top.html');?>
 <style type="text/css">
-.fs18{font-size: 18px;}
+	.fs18{font-size: 18px;}
 	.topay-plist h1{font-size: 18px;}
 	.topay-plist table{width: 984px;margin: 10px auto;}
 	.topay-tb thead th{background-color: #eeeeee;height: 25px;
@@ -29,137 +29,172 @@
 			margin-top: 20px;
 			margin: 0 auto;
 	}
-	.ti-jfdh2 p{font-weight: bold;font-size: 14px;padding: 20px 0;border-bottom: 1px solid #ccc;}
+	.ti-jfdh2 p{font-weight: bold;font-size: 14px;padding: 10px 0 5px 50px;color: red;}
 	.ti-jfdh2 ul{margin-left: 15px}
 	.ti-jfdh2 ul li{float: left;height: 50px;line-height: 50px;margin-top: 20px;}
-	.ti-ljzf{width: 866px;text-align: center;margin: 0 auto;padding-top: 50px;}
+	.ti-ljzf{width: 866px;text-align: center;margin: 0 auto;padding-top: 10px;}
 </style>
+<form action="<?php echo site_url('cart/delOrder');?>" method="post" id="orderform">
 <div class="zxfh-g">
-<div class="topay-plist">
-<h1>&nbsp;&nbsp;商品清单</h1>
-<table class="topay-tb">
-	<thead>
-		<tr>
-			<th>商品</th>
-			<th>单价（元）</th>
-			<th>数量</th>
-			<th>总价（元）</th>
-		</tr>
-	</thead>
-	<tbody>
-		<?php $totalprice=0; if(!empty($items)){foreach($items as $item){?>
-		<tr>
-			<td class="fore1" style="width: 406px;">
-				<div class="fl"><a href="<?php echo site_url('store/singleGood').'/sid/'.$item['sid'].'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><img src="<?php echo $item['img'];?>" height="50" width="50"></a></div>
-				<div style="padding-top: 5px;"><a href="<?php echo site_url('store/singleGood').'/sid/'.$item['sid'].'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><?php echo $item['name'];?></a></div>
-			</td>
-			<td class="fore2" style="text-align: center;">￥<?php echo $item['price'];?></td>
-			<td class="fore3" style="text-align: center;">x <?php echo $item['num'];?></td>
-			<td class="fore4" style="text-align: center;">￥<?php echo $item['price']*$item['num'];?></td>	
-			<?php $totalprice = $totalprice + $item['price']*$item['num'];?>		
-		</tr>
-		<?php }}?>
-	</tbody>
-</table>
-</div>
+	<div class="topay-plist">
+		<h1>&nbsp;&nbsp;商品清单</h1>
+		<table class="topay-tb">
+			<thead>
+				<tr>
+					<th>商品</th>
+					<th>单价（元）</th>
+					<th>数量</th>
+					<th>总价（元）</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php $totalprice=0; if(!empty($items)){foreach($items as $item){?>
+				<input type="hidden" name="pids[]" value="<?php echo $item['id'];?>" class="tp_pids">
+				<tr>
+					<td class="fore1" style="width: 406px;">
+						<div class="fl"><a href="<?php echo site_url('store/singleGood').'/sid/'.$item['sid'].'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><img src="<?php echo $item['img'];?>" height="50" width="50"></a></div>
+						<div style="padding-top: 5px;"><a href="<?php echo site_url('store/singleGood').'/sid/'.$item['sid'].'/tid/'.$item['tid'].'/pid/'.$item['id'];?>"><?php echo $item['name'];?></a></div>
+					</td>
+					<td class="fore2" style="text-align: center;">￥<?php echo $item['price'];?></td>
+					<td class="fore3" style="text-align: center;">x <?php echo $item['num'];?></td>
+					<td class="fore4" style="text-align: center;">￥<?php echo $item['price']*$item['num'];?></td>	
+					<?php $totalprice = $totalprice + $item['price']*$item['num'];?>		
+				</tr>
+				<?php }}?>
+			</tbody>
+		</table>
+	</div>
 
-<div class="zxfh">
-<p>商品金额总计：￥<?php echo $totalprice;?>元</p>
-</div>
+	<div class="zxfh">
+	<p>商品金额总计：￥<?php echo $totalprice;?>元</p>
+	</div>
 <script type="text/javascript">
+	function tjdd(){
+		$('#orderform').submit();
+	}
+
 	function show_yz(){
-		$(".yanzheng").css('display','block');
+		if($(".yanzheng").css('display') == 'none')
+			$(".yanzheng").css('display','block');
+		else
+			$(".yanzheng").css('display','none');
 	}
 
 	function yzyhq(){
 		var yhq = $.trim($("input[name='yhq']").val());
 		var url = "<?php echo site_url('member/yzyhq1');?>";
-		$.post(
-			url,
-			{yhq:yhq},
-			function(data){							
-				if(data.statuscode == 0 || data.statuscode == -2){
-					html = "<li><span>编号："+data.couponId+"</span><span>类别："+data.stringStatus+"</span><span>使用时间："+data.validTime+"</span><span>金额："+data.couponCash+"元</span></li>";
-					$(html).appendTo("#tp_list_yhq");					
-				}				
-				$(".yanzheng").css('display','none');
-			},
+		//
+		var $yt = $("input[class='yhq_input']");
+		var hh = 0;
+		//console.log($yt);
+		//console.log($("input[class='tp_pids']"));
+		$yt.each(function(index,value){
+			//alert($yt.eq(index).val());
+			if(yhq == $yt.eq(index).val()){
+				alert('已经添加在列表了！');
+				hh = 1;
+				return false;				
+			}
+			
+		});
+		if(hh == 0){
+			$.post(
+				url,
+				{yhq:yhq},
+				function(data){							
+					if(data.statuscode == 0 || data.statuscode == -2){
+						html = "<input type='hidden' name='yhqs[]' class='yhq_input' value='"+data.couponNo+"'><li><span>优惠券："+data.couponNo+"</span><span>类别："+data.stringStatus+"</span><span>使用时间："+data.validTime+"</span><span>金额："+data.couponCash+"元</span></li>";
+						$(html).appendTo("#tp_list_yhq");
+										
+					}else{
+						alert(data.status);
+					}				
+					$(".yanzheng").css('display','none');
+				},
 			'json');
+		}				
 	}
 </script>
-<div class="jfdh2 clearfix">
-	<div class="tp-yhq">
-		<h1>使用已有购物券</h1><a href="javascript:;" onclick="show_yz()"><img src="<?php echo base_url().MIMG;?>tjgwq.jpg"></a>
-	</div>
-	<div class="yanzheng">
-		<input type="text" name="yhq" class="yz-input"> <a href="javascript:;" onclick="yzyhq();"><img src="<?php echo base_url().MIMG;?>tijiao.jpg"></a>
-	</div>
-	<!--添加优惠券-->
-<ul class="clearfix" id="tp_list_yhq"></ul>
-</div>
-
-<div style="margin: 25px auto;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
-
-<div class="ti-jfdh2 clearfix">
-	<div class="tp-yhq">
-		<h1 class="fl fs18">选择支付方式</h1>		
-		<a href="javascript:;" id="zxzf_img"><img src="<?php echo base_url().MIMG;?>zxzf.jpg" ></a>
-		<a href="javascript:;" id="hdfk_img"><img src="<?php echo base_url().MIMG;?>hdfk.jpg" ></a>
-	</div>
-	<div>
-		<ul class="tp-zf1 clearfix">
-		<li><img src="<?php echo base_url().MIMG;?>zhifubao.jpg"></li>
-		<li><img src="<?php echo base_url().MIMG;?>qitazhifu.jpg"></li>
-		<li><img src="<?php echo base_url().MIMG;?>qitazhifu.jpg"></li>
-		<li><img src="<?php echo base_url().MIMG;?>qitazhifu.jpg"></li>
-		</ul>
+	<div class="jfdh2 clearfix">
+		<div class="tp-yhq">
+			<h1>使用已有购物券</h1><a href="javascript:;" onclick="show_yz()"><img src="<?php echo base_url().MIMG;?>tjgwq.jpg"></a>
+		</div>
+		<div class="yanzheng">
+			<input type="text" name="yhq" class="yz-input"> <a href="javascript:;" onclick="yzyhq();"><img src="<?php echo base_url().MIMG;?>tijiao.jpg"></a>
+			<input type="hidden" class="yhq_input" value=''>
+		</div>
+		<!--添加优惠券-->
+		<ul class="clearfix" id="tp_list_yhq"></ul>
 	</div>
 
+	<div style="margin: 25px auto;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
+
+	<div class="ti-jfdh2 clearfix">
+		<div class="tp-yhq">
+			<h1 class="fl fs18">选择支付方式</h1>			
+		</div>
+		<div>
+			<p><input type="radio" name="zffs" value='hdfk' checked=checked>货到付款</p>
+			<p><input type="radio" name="zffs" value='zfb'>支付宝</p>
+		</div>
+	</div>
+	<div style="margin: 25px auto;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
+<style type="text/css">
+	.tp-shdz{width: 866px;margin: 0 auto;}
+	.tp-shdz h1{margin-bottom: 20px;}
+	.mr-shdz{font-size: 14px;height: 30px;line-height: 30px;vertical-align: middle;margin-bottom: 20px;}
+	.mr-shdz span{margin-right: 20px;}
+	.mr-shdz a{margin-right: 20px;display: inline;background: #ccc;padding: 5px;}
+	.re-shdz{display: none;width: 866px;background-color: #ccc;padding: 10px 0;}
+	.re-shdz ul{margin-left: 30px;}
+	.re-shdz li{float: left;width: 715px;height: 40px;font-size: 14px;line-height: 30px;}
+	.re-shdz p{width: 90px;
+			text-align: right;
+			margin: 0 3px;
+			height: 40px;
+			float: left;
+			line-height: 30px;
+			font-size: 13px;
+	}
+</style>
+<script type="text/javascript">
+	function xiugaidizhi(){		
+		$('.re-shdz').css('display', 'block');		
+	}
+</script>
+	<div class="tp-shdz">
+		<h1 class="fs18">确认收货地址</h1>	
+		<div class="mr-shdz clearfix">
+			<div class="fl"><span>李贺</span><span>147482364</span><span>上海普陀区曹杨路898号联合大厦486室</span></div>
+			<div class="fr"><a href="javascript:;" onclick="xiugaidizhi()" id="xiugaidizhi">修改</a></div>
+		</div>
+		<div class="re-shdz clearfix">
+			<h1 class="fs18">添加新的收货地址</h1>
+			<ul>
+				<li><p><font style="color:#ec6517">※</font>收货人：</p><input type="text" name="shr" class="sjr-txt" value="李贺"></li>
+				<li><p><font style="color:#ec6517">※</font>所在地区：</p>   <select name="szd" style="width:80px;height:25px;" name="select" >
+	             <option value="1">上海市</option>    
+	     
+	           </select> <select name="select" style="width:80px;height:25px;" name="select" >
+	             <option value="1">请选择</option>
+	             <option value="2">上海</option>
+	     
+	           </select> <select name="select" style="width:80px;height:25px;" name="select" >
+	             <option value="1">请选择</option>
+	             <option value="2">上海</option>
+	     
+	           </select></li>
+			   <li><p><font style="color:#ec6517">※</font>详细地址：</p><input type="text" name="xxdz" class="sjr-txt" style="width:320px" value="上海普陀区曹杨路898号联合大厦486室"></li>
+				<li><p><font style="color:#ec6517">※</font>手机号码：</p><input type="text"  name="sjh" class="sjr-txt" value="157475847"> <p>或&nbsp;&nbsp;&nbsp;固定电话：</p><input type="text" class="sjr-txt"  name="gddh"></li>
+				<li><p><font style="color:#ec6517">※</font>邮箱：</p><input type="text" class="sjr-txt" name="mail" value="admin@admin.com">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用来接收订单提醒邮件，便于您及时了解订单状态</li>
+				<li><button class="sjr-queding"></button></li>
+			</ul>
+		</div>
+	</div>
 </div>
-<div style="margin: 25px auto;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
-
-<div class="jfdh2">
-<h2>确认收货地址</h2>
-<div class="jfdh2-1">
-<span>李贺  </span><span>上海普陀区曹杨路898号联合大厦486室</span><p><a href="">修改</a><a href="">确认</a></p>
-
-</div>
-</div>
-
-<div class="sjr clear">
-	<h1>确认收货地址</h1>
-<form>
-<ul>
-<li><p><font style="color:#ec6517">※</font>收货人：</p><input type="text" class="sjr-txt"></li>
-
-<li><p><font style="color:#ec6517">※</font>所在地区：</p>   <select name="select" style="width:80px;height:25px;" name="select" >
-             <option value="1">上海市</option>
-         
-     
-           </select> <select name="select" style="width:80px;height:25px;" name="select" >
-             <option value="1">请选择</option>
-             <option value="2">上海</option>
-     
-           </select> <select name="select" style="width:80px;height:25px;" name="select" >
-             <option value="1">请选择</option>
-             <option value="2">上海</option>
-     
-           </select></li>
-		   <li><p><font style="color:#ec6517">※</font>详细地址：</p><input type="text" class="sjr-txt" style="width:320px"></li>
-<li><p><font style="color:#ec6517">※</font>手机号码：</p><input type="text" class="sjr-txt"> <p>或&nbsp;&nbsp;&nbsp;固定电话：</p><input type="text" class="sjr-txt"></li>
-<li><p><font style="color:#ec6517">※</font>邮箱：</p><input type="text" class="sjr-txt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用来接收订单提醒邮件，便于您及时了解订单状态</li>
-<li><input type="submit" value=""class="sjr-queding"></li>
-
-</ul>
-</form>
-</div>
-</div>
-
-<div class="clear"></div>
 <div class="ti-ljzf">
-<div style="margin-bottom: 50px;width: 866px;overflow: hidden;"><img src="<?php echo base_url().MIMG;?>bottom_line.jpg"></div>
-<a href=""><img src="<?php echo base_url().MIMG;?>lijizhifu.jpg"></a>
+<a href="javascript:;" onclick="tjdd()"><img src="<?php echo base_url().MIMG;?>lijizhifu.jpg"></a>
 </div>
-
+</form>
 
 <?php $this->load->view('_footer.html');?>

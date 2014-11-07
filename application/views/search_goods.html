@@ -24,17 +24,17 @@
         var img = "http://cimall.dev/assets/images/3_37.jpg";
         $.post(
             url,
-            {sid:sid,tid:tid,pid:pid,name:name,price:price,num:1,img:img},
+            {sid:sid,tid:tid,pid:pid,name:name,price:price,num:1,img:img,desc:desc},
             function(data){
-                if(data == 1){
-                    num = parseInt(num)+1;
+                if(data){
+                    //num = parseInt(num)+1;
                     //alert(num);
-                   $("#g-num"+pid).text(num);
+                   $("#g-num"+pid).text(data.num);
                 }                    
                 else
                     alert('添加购物车失败！');
             },
-            'text');        
+            'json');        
     }
 </script>
 <div class="cp-show">

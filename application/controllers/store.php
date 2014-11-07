@@ -26,8 +26,10 @@ class Store extends CI_Controller {
 	 * @param  integer $storeid [商店id]
 	 * @return [type]           [array 商品分类+商品信息]
 	 */
-	public function single($storeid = 1){
+	public function single(){		
 		$segments = $this->uri->uri_to_assoc();
+		if(empty($segments))
+			redirect('home');
 		$storeid = (int)$segments['sid'];
 		$tid = isset($segments['tid']) ? (int)$segments['tid'] : 0;
 
@@ -37,6 +39,8 @@ class Store extends CI_Controller {
 		$data['page'] = $page;	
 		// 购物车商品
 		$data['carts'] = $this->shopcart->getAllItem();		
+		//获取商品总数num
+		$data['sumnum'] = $this->shopcart->getNum();
 
 		$postdata = array(
 			"storeId" => (int)$storeid
@@ -101,29 +105,48 @@ class Store extends CI_Controller {
 		$segments = $this->uri->uri_to_assoc();
 		if(empty($segments)) 
 			redirect('store');		
-		$data['storeid'] = (int)$segments['sid'];
+		$data['storeid'] = $storeid = (int)$segments['sid'];
 		$tid = (int)$segments['tid'];
 		$pid = (int)$segments['pid'];
-					
-		$postdata1 = array(
-			"productTypeId" => $tid,
-		    "nowPage" => 1,
-		    "pageCount" => 25
-			);
-		$ptl = $this->yike->getProductList($postdata1);
-		$good = array();
-		if(!empty($ptl['productList'])){
-			foreach($ptl['productList'] as $v){
-				$v = get_object_vars($v);
-				if($v['productId'] == $pid){
-					$good = $v;
-					break;
-				}
+		// 购物车商品
+		$data['carts'] = $this->shopcart->getAllItem();	
+		//获取商品总数num
+		$data['sumnum'] = $this->shopcart->getNum();
+		// 获取本店商品分类
+		$postdata = array(
+			"storeId" => $storeid
+			);		
+		$rs = $this->yike->getProductTypeList($postdata);		
+
+		//获取随机商品和要显示的商品
+		foreach($rs['productTypeList'] as $ptl){
+			$ptl = get_object_vars($ptl);		
+			$data['fenlei'][] = $ptl;
+			$postdata1 = array(
+				"productTypeId" => $ptl['productTypeId'],
+			    "nowPage" => 1,
+			    "pageCount" => 25
+				);
+			$gg = $this->yike->getProductList($postdata1);	
+			foreach($gg['productList'] as $g){
+				$g = get_object_vars($g);
+				if($g['productId'] == $pid && $ptl['productTypeId'] == $tid)				
+					$data['good'] = $g;
+				else
+					$allgoods[] = $g; //$data['randgoods'][] = $g;					
+			}				
+		}
+		//prpre(array_rand($allgoods, 2));exit;
+				
+		if(count($allgoods) < 7)  //7
+			$data['randgoods'] = $allgoods;
+		else{
+			$randkey = array_rand($allgoods, 6);  //6
+			foreach($randkey as $v){
+				$data['randgoods'][] = $allgoods[$v];
 			}
 		}
-		
-		$data['good'] = $good;
-		//prpre($data);exit;
+		//prpre($data['randgoods']);exit;
 		$this->load->view("goods_index.html", $data);
 	}
 
@@ -153,6 +176,8 @@ class Store extends CI_Controller {
 		
 		// 购物车商品
 		$data['carts'] = $this->shopcart->getAllItem();
+		//获取商品总数num
+		$data['sumnum'] = $this->shopcart->getNum();
 
 		$data['url'] = site_url('store/goodSearch')."/sid/".$sid."/keyword/".$kw;
 

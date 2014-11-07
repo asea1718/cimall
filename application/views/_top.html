@@ -2,15 +2,22 @@
 <div id="ding1">
 <div class="cp-top">
 <a href="/" class="n-logo"><img src="<?php echo base_url().MIMG.'logo.png';?>"></a>
-
+<script type="text/javascript">
+  function search(){
+    
+    var kw = $.trim($('#destoon_kw').val());      
+    if(kw == '请输入您所在的小区地址' || kw == '')
+      return false;
+    else{
+      var gourl = "<?php echo site_url('store/search');?>"+'/'+decodeURIComponent(kw);
+      window.location.href = gourl;        
+    }       
+   
+  }
+</script>
 <div class="ditu-so2">
-<form id="destoon_search" action="" class="ditutu1">
-<input name="kw" id="destoon_kw" type="text" class="dituu1" value="请输入您所在的小区地址" onfocus="if(this.value=='请输入您所在的小区地址') this.value='';" onkeyup="STip(this.value);" />
-
-<input type="submit" value=""class="qued1">
-</form>
-
-
+	<input name="keyword" id="destoon_kw" type="text" class="dituu1" value="请输入您所在的小区地址" onfocus="if(this.value=='请输入您所在的小区地址') this.value='';" onkeyup="STip(this.value);"  onkeydown="javascript:if(event.keyCode==13)search();"/>    
+    <button class="qued1"  onclick="search()"></button>
 </div>
 <div class="cp-rz">
 <a href="<?php echo site_url('about/csrz');?>"><img src="<?php echo base_url().MIMG.'3_06.png';?>"></a>
@@ -22,9 +29,10 @@
 <span style="border-bottom:none;color:#f4fcfe;margin-left:20px;"><a href="<?php echo site_url('home/loginOut');?>">退出</a></span>
 </div>
 <?php }else{ ?>
+<?php $backurl = site_url().ltrim($_SERVER['REQUEST_URI'], '/');?>
 <div class="cp-zc">
 <a href="<?php echo site_url('home/register');?>">注册</a>
-<a href="<?php echo site_url('home/login');?>">登陆</a>
+<a href="<?php echo site_url('home/login').'?'.$backurl;?>">登陆</a>
 </div>
 <?php }?>
 

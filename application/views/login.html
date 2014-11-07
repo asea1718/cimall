@@ -11,6 +11,7 @@
 <!-- login -->
 <div class="wrw-dl">
 	<form action="<?php echo site_url('home/doLogin');?>" method="post" id="login_form">
+		<input type="hidden" name="backurl" value="<?php echo $backurl;?>">
 		<div class="wrw-dl-1">
 			<h1>用户登录</h1>
 			<a href="<?php echo site_url('home/register');?>">注册新账号</a>

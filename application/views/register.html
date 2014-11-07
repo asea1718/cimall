@@ -12,6 +12,7 @@
 <!-- denglu start -->
 <div class="denglu-g">
 <form action="<?php echo site_url('home/doRegister');?>" method="post">
+	<input type="hidden" name="backurl" value="<?php echo $backurl;?>">
 <ul>
 <h1></h1>
 <li>手机号：<input type="text" name="accountName" class="yonghumin" placeholder="请输入手机号码"></li>

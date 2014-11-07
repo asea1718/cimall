@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7 charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>成功添加购物车</title>
+<meta name="description" content="邑客社区网购超市" />
+<meta name="keywords" content="烦都烦死分,邑客社区网购超市" />
+<link href="<?php echo base_url().MCSS.'style.css';?>" rel="stylesheet" type="text/css" />
+<link rel="icon" href="favicon.ico" type="image/x-icon" />
+</head>
+
+<body>
+<?php $this->load->view('_top.html');?>
+<style type="text/css">
+.f-span2{margin-left: 300px;}
+.f-span3{float: right;margin-right: 20px;}
+.f-p1{border-bottom: 1px solid #ccc;font-weight: bold;font-size: 14px;padding: 20px 10px;margin-bottom: 50px;}
+.f-phone{}
+.storetel, .storephone{margin-bottom: 30px;text-align: center;width: 200px;height: 40px;line-height: 40px;background: #34bcea;color: #fff;font-size: 16px;}
+.storetel{margin-left: 300px;}
+.storephone{margin-left: 50px;}
+
+</style>
+    <div class="m" id="succeed">
+    	<p style="text-align: center;color: red;margin-bottom: 30px;font-size: 16px;font-weight: bold;">您的订单已经提交成功！</p>
+    	<div class="zxfh clearfix">
+    		订单号：<span class="f-span1"><?php echo $orderNo;?></span><span class="f-span2">订单金额：￥<?php echo $totalFee;?>元</span><span class="f-span3">支付方式：<?php if($orderType == 1){echo '货到付款';}elseif($orderType == 2){echo "支付宝支付";}else{echo '其他支付';}?></span>
+    	</div>        
+        <p class="f-p1">超市订单电话：</p>
+        <p class="f-phone clear">
+        	<div class="storetel fl">147 5842 5478</div>
+        	<div class="storephone fl">0785 4758444</div>
+        </p>
+        </div>
+ 
+
+ <?php $this->load->view('_footer.html');?>

@@ -14,7 +14,10 @@
 
 <script type="text/javascript">
 	function show_yz(){
-		$(".yanzheng").css('display','block');
+		if($(".yanzheng").css('display') == 'none')
+			$(".yanzheng").css('display','block');
+		else
+			$(".yanzheng").css('display','none');
 	}
 
 	function yzyhq(){
