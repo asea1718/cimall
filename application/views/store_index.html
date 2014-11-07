@@ -70,7 +70,7 @@
         <p class="cp-tel">15950410056</br>15950410056</p>
         <div class="top-gwc fr">
             <a href="<?php echo site_url('cart');?>" title="购物车"><img src="<?php echo base_url().MIMG;?>3_24.jpg" style="margin:20px 0 0 45px"></a>
-            <div class="top-gwc-num"><span id="gwc_sum"><?php echo $sumnum;?></span></div>
+            <div class="top-gwc-num"><span id="gwc_sum"><?php echo $sumnum == 0 ? '' : $sumnum;?></span></div>
         </div>        
     </div>    
 </div>

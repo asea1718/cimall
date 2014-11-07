@@ -107,6 +107,34 @@ class Cart extends CI_Controller {
 	 */
 	public function buy(){
 		$this->index();
+	}	
+
+	/**
+	 * 去支付页面
+	 */
+	public function toPay(){
+		// 判断是否登录了
+		$backurl = base_url().ltrim($_SERVER['REQUEST_URI'], '/');
+		if(!$this->session->userdata('uphone')){
+			$data = array(
+				'message' => '登陆后才能进行购买！',
+				'time'    => '2',
+				'goto'    => site_url('home/login').'?'.$backurl
+				);
+			$this->load->view('show_message.html', $data);
+			return;
+		}
+		if(!$this->input->post())
+			redirect('cart');
+		$pids = $this->input->post('p_id');
+		//prpre($this->input->post('p_id'));exit;
+		$items = array();
+		foreach($pids as $pid){
+			$items[] = $this->shopcart->getItem($pid);
+		}
+		$data['items'] = $items;
+		//prpre($items);exit;
+		$this->load->view('to_pay.html', $data);
 	}
 
 	/**
@@ -153,9 +181,10 @@ class Cart extends CI_Controller {
 		    "orderDetailList" => $orderDetailList  //订单商品列表
 		    //"couponList" => $couponList             //优惠券列表
 			);
-		if(!empty($yhqs)){			
-			foreach($yhqs as $k => $yhq){				
-				$postdata['couponList'][] = array("couponNo" => $yhq);
+		if(!empty($yhqs)){	
+			$ys = array_unique($yhqs);		
+			foreach($ys as $y){				
+				$postdata['couponList'][] = array("couponNo" => $y);
 				
 			}
 		}
@@ -185,34 +214,6 @@ class Cart extends CI_Controller {
 			$this->load->view('show_message.html', $data);
 			return;
 		}
-	}
-
-	/**
-	 * 去支付页面
-	 */
-	public function toPay(){
-		// 判断是否登录了
-		$backurl = base_url().ltrim($_SERVER['REQUEST_URI'], '/');
-		if(!$this->session->userdata('uphone')){
-			$data = array(
-				'message' => '登陆后才能进行购买！',
-				'time'    => '2',
-				'goto'    => site_url('home/login').'?'.$backurl
-				);
-			$this->load->view('show_message.html', $data);
-			return;
-		}
-		if(!$this->input->post())
-			redirect('cart');
-		$pids = $this->input->post('p_id');
-		//prpre($this->input->post('p_id'));exit;
-		$items = array();
-		foreach($pids as $pid){
-			$items[] = $this->shopcart->getItem($pid);
-		}
-		$data['items'] = $items;
-		//prpre($items);exit;
-		$this->load->view('to_pay.html', $data);
 	}
 
 	/////////////////////////////

@@ -79,40 +79,54 @@
 		else
 			$(".yanzheng").css('display','none');
 	}
-
+	var yhqarr = [];  //
 	function yzyhq(){
 		var yhq = $.trim($("input[name='yhq']").val());
 		var url = "<?php echo site_url('member/yzyhq1');?>";
 		//
 		var $yt = $("input[class='yhq_input']");
 		var hh = 0;
+		
 		//console.log($yt);
 		//console.log($("input[class='tp_pids']"));
-		$yt.each(function(index,value){
+		/*$yt.each(function(index,value){
 			//alert($yt.eq(index).val());
 			if(yhq == $yt.eq(index).val()){
 				alert('已经添加在列表了！');
+				$(".yanzheng").css('display','none');
 				hh = 1;
 				return false;				
 			}
 			
-		});
-		if(hh == 0){
+		});*/
+		console.log(yhqarr);
+		for(var i=0;i<yhqarr.length;i++){
+			if(yhqarr[i] == yhq){
+				alert('已经添加在列表了！');
+				$(".yanzheng").css('display','none');
+				hh = 1;
+				return false;
+			}
+		}
+		if(hh == 0){  
 			$.post(
 				url,
 				{yhq:yhq},
 				function(data){							
 					if(data.statuscode == 0 || data.statuscode == -2){
-						html = "<input type='hidden' name='yhqs[]' class='yhq_input' value='"+data.couponNo+"'><li><span>优惠券："+data.couponNo+"</span><span>类别："+data.stringStatus+"</span><span>使用时间："+data.validTime+"</span><span>金额："+data.couponCash+"元</span></li>";
-						$(html).appendTo("#tp_list_yhq");
-										
+						if(hh == 0){
+							html = "<input type='hidden' name='yhqs[]' class='yhq_input' value='"+data.couponNo+"'><li><span>优惠券："+data.couponNo+"</span><span>类别："+data.stringStatus+"</span><span>使用时间："+data.validTime+"</span><span>金额："+data.couponCash+"元</span></li>";
+							$(html).appendTo("#tp_list_yhq");
+							yhqarr.push(yhq);
+						}										
 					}else{
 						alert(data.status);
 					}				
 					$(".yanzheng").css('display','none');
 				},
 			'json');
-		}				
+		}
+						
 	}
 </script>
 	<div class="jfdh2 clearfix">
