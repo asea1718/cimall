@@ -160,7 +160,7 @@ class Cart extends CI_Controller {
 			}
 		}
 		$rs = $this->yike->commitOrder($postdata);
-		prpre($postdata);prpre($rs);exit;
+		//prpre($postdata);prpre($rs);exit;
 		# resultCode  0 提交订单成功 -1 异常 -2 加盟店或者商品不存在 -3 优惠
 		if($rs['resultCode'] == 0 || $rs['resultCode'] == -3){
 			foreach($pids as $id){
