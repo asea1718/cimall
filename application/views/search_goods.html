@@ -71,9 +71,12 @@
 
 </div>
 
-<?php if($page == 1 && $haspage == 1){?>
+
 <div class="m-page">
-	<ul class="clearfix">
+<?php if($haspage == 0 && $page == 1){?>
+	<ul class="page-one-ul"><li>当前只有一页</li></ul>
+<?php }else{?>
+	<ul class="clearfix ml400 page-ul">
 	<?php if($page == 1){?>		
 		<li><a>1</a></li>
 		<li><a href="<?php echo $url.'/page/'.($page+1);?>">2</a></li>		
@@ -98,8 +101,9 @@
 		<li><a href="<?php echo $url.'/page/'.($page+1);?>">下一页</a></li>
 	<?php }?>
 	</ul>
-</div>
 <?php }?>
+</div>
+
 
 
 <?php $this->load->view('_footer.html');?>

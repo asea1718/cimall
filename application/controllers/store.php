@@ -15,8 +15,9 @@ class Store extends CI_Controller {
 			"name" => "便利店",
 		    "nowPage" => 1,
 		    "pageCount" => 25
-			);
-		$rs = $this->yike->getStoreList($postdata);
+			);		
+		$rs = $this->yike->getStoreList($postdata);		
+		
 		//prpre($rs);exit;
 		$this->load->view("index_search.html");
 	}
@@ -101,7 +102,7 @@ class Store extends CI_Controller {
 	 * 商品详情页
 	 * @return [type] [description]
 	 */
-	public function singleGood(){
+	public function singleGood(){		
 		$segments = $this->uri->uri_to_assoc();
 		if(empty($segments)) 
 			redirect('store');		
@@ -115,8 +116,9 @@ class Store extends CI_Controller {
 		// 获取本店商品分类
 		$postdata = array(
 			"storeId" => $storeid
-			);		
-		$rs = $this->yike->getProductTypeList($postdata);		
+			);	
+		
+		$rs = $this->yike->getProductTypeList($postdata);			
 
 		//获取随机商品和要显示的商品
 		foreach($rs['productTypeList'] as $ptl){
@@ -147,7 +149,7 @@ class Store extends CI_Controller {
 			}
 		}
 		//prpre($data['randgoods']);exit;
-		$this->load->view("goods_index.html", $data);
+		$this->load->view("goods_index.html", $data);		
 	}
 
 	/**

@@ -495,8 +495,9 @@ a:hover{color:#338ccb; text-decoration:nounder;}
 .particular .ware_line { width: 928px; border-top: 2px solid #efefef; border-bottom: 2px solid #efefef; padding: 1px 0; margin-bottom: 20px; }
 .particular .ware { border-top: 1px solid #efefef; border-bottom: 1px solid #efefef; }
 .particular .ware_list { width: 928px; overflow: hidden; padding: 10px 0; }
+.detail-list-img{width: 50px;height: 50px;padding: 2px;border: 1px solid #cecece;}
 .particular .ware_pic { float: left; width: 50px; height: 50px; background: url(../images/member/initialize_pic.gif) no-repeat -5px -318px; margin: 0 10px; display: inline; }
-.particular .ware_text { float: left; }
+.particular .ware_text { float: left;}
 .particular .ware_text1 { width: 266px; float: left; }
 .particular .ware_text1 a { color: #3f3f3f; text-decoration: none; }
 .particular .ware_text1 a:hover { text-decoration: underline; }
@@ -630,10 +631,12 @@ margin: 8px 0 0 25px;
 .wrw-wjmm:hover{color:red}
 
 /*******分页********/
-.m-page{width: 1200px;margin: 20px auto;}
-.m-page ul{margin-left: 400px;}
-.m-page li{float: left;height: 30px;line-height: 30px;margin-right: 10px;}
-.m-page li a{display: block;padding: 0 10px;border: 1px solid #c3c3c3;}
+.m-page{width: 1200px;margin: 20px auto;text-align: center;}
+.ml400{margin-left: 400px;}
+.page-ul li{float: left;height: 30px;line-height: 30px;margin-right: 10px;}
+.page-ul li a{display: block;padding: 0 10px;border: 1px solid #c3c3c3;}
+.page-one-ul{margin: 0 auto;text-align: center;}
+.page-one-ul li{margin-left: 20px;font-size: 16px;height: 30px;line-height: 30px;}
 /****商品购物车出现数字******/
 .g-bottom{border-top: 1px solid #68c2ee;
 			text-align: left;

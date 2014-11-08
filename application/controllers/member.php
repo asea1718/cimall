@@ -3,10 +3,20 @@
 class Member extends CI_Controller {
 	public function __construct(){
 		parent::__construct();
+		# 
 		$this->load->library('yike');
+		//获取当前页面的url参数
+		$backurl = base_url().ltrim($_SERVER['REQUEST_URI'], '/');
+		//判断是否登陆了
 		if(!$this->session->userdata('uphone')){
-			redirect('home/login');
-		}
+			$data = array(
+				'message' => '您还没登陆！',
+				'time'    => '1',
+				'goto'    => site_url('home/login').'?'.$backurl
+				);
+			$this->load->view('show_message.html', $data);
+			return;
+		}		
 	}
 
 	public function index(){
@@ -14,12 +24,23 @@ class Member extends CI_Controller {
 	}
 
 	public function ddcx(){
+		$segments = $this->uri->uri_to_assoc();
+		//分页显示数
+		$pagecount = 5;
+		$data['page'] = $page = isset($segments['page']) ? (int)$segments['page'] : 1;
+		$data['haspage'] = 1;
+
 		$postdata = array(
-			"pageCount" => 25,
+			"pageCount" => $pagecount,
 		    "userId" => 1,
-		    "nowPage" => 1
+		    "nowPage" => $page
 			);		
-		$data = $this->yike->getOrderList($postdata);		
+		$orders = $this->yike->getOrderList($postdata);	
+		//判断是否还有分页
+		if($orders['totalCount'] <= ($pagecount * $page))
+			$data['haspage'] = 0;	
+		$data['orders'] = $orders;
+		$data['url'] = site_url('member/ddcx');
 		//prpre($data);exit;
 		$this->load->view('checkitem.html', $data);
 	}
