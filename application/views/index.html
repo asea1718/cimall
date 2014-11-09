@@ -51,13 +51,13 @@
       <div class="Cont" id="ISL_Cont">
         <div class="ScrCont">
           <div id="List1">
-            <ul id="changeul">
-            <li class="bs" onclick="change_con(this,121.57957057485,31.16062302186)"><p class="jj_on" id="jj1" ><span>宝山</span></p></li>
-            <li class="pd" onclick="change_con(this,121.56957057485,31.16062302186)"><p class="jj_off" id="jj2" ><span>浦东</span></p></li>
-            <li class="hk" onclick="change_con(this,121.57357057485,31.16062302186)"><p class="jj_off" id="jj3" ><span>虹口</span></p></li>
-            <li class="xh" onclick="change_con(this,121.57657057485,31.16062302186)"><p class="jj_off" id="jj4" ><span>徐汇</span></p></li>
-            <li class="cn" onclick="change_con(this,121.57957057485,31.16062302186)"><p class="jj_off" id="jj5" ><span>长宁</span></p></li>
-            <li class="yp" onclick="change_con(this,121.58257057485,31.16062302186)"><p class="jj_off" id="jj6" ><span>杨浦</span></p></li>
+            <ul>
+              <li class="yp" onclick="change_con(this,121.58257057485,31.16062302186)"><p class="jj_on" id="jj6" ><span>杨浦</span></p></li>
+              <li class="bs" onclick="change_con(this,121.57957057485,31.16062302186)"><p class="jj_off" id="jj1" ><span>宝山</span></p></li>
+              <li class="pd" onclick="change_con(this,121.56957057485,31.16062302186)"><p class="jj_off" id="jj2" ><span>浦东</span></p></li>
+              <li class="hk" onclick="change_con(this,121.57357057485,31.16062302186)"><p class="jj_off" id="jj3" ><span>虹口</span></p></li>
+              <li class="xh" onclick="change_con(this,121.57657057485,31.16062302186)"><p class="jj_off" id="jj4" ><span>徐汇</span></p></li>
+              <li class="cn" onclick="change_con(this,121.57957057485,31.16062302186)"><p class="jj_off" id="jj5" ><span>长宁</span></p></li>            
             </ul>
           </div>
           <div id="List2"></div>
@@ -75,7 +75,7 @@
     if(kw == '请输入您所在的小区地址' || kw == '')
       return false;
     else{
-      var gourl = "<?php echo site_url('store/search');?>"+'/'+decodeURIComponent(kw);
+      var gourl = "<?php echo site_url('store/search');?>"+'/keyword/'+decodeURIComponent(kw);
       window.location.href = gourl;        
     }       
    
@@ -148,9 +148,13 @@
   function change_con(obj,lng,lat){
     $(".map-dw").attr('lng', lng);
     //alert($(".map-dw").attr('lng'));
-    $("#changeul p").each(function(index,value){
+    $("#List1 ul p").each(function(index,value){
       //console.log(index);
-      $("#changeul p").eq(index).attr('class','jj_off');
+      $("#List1 ul p").eq(index).attr('class','jj_off');
+    });
+    $("#List2 ul p").each(function(index,value){
+      //console.log(index);
+      $("#List2 ul p").eq(index).attr('class','jj_off');
     });
     $(obj).find('p').attr('class','jj_on');
    

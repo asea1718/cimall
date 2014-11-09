@@ -60,16 +60,109 @@ function query(name, value){
     </div>
   <script language="javascript" type="text/javascript">
   /*选项卡*/
-  function change_con(ww,num,hh)
-  {
-    var obj=ww
-    for(var ii=1;ii<=num;ii++)
-    {
-     document.getElementById(obj+ii).className=obj+"_off";
-     document.getElementById(obj+ii+ii).style.display="none";
+  /*
+  function change_con(ww,num,hh,kw){
+    var obj=ww;
+    var url = "<?php echo site_url('store/postSearch');?>";
+    for(var ii=1;ii<=num;ii++){
+      document.getElementById(obj+ii).className=obj+"_off";
+      document.getElementById(obj+ii+ii).style.display="none";
     }
-     document.getElementById(obj+hh).className=obj+"_on";
-     document.getElementById(obj+hh+hh).style.display="";
+    document.getElementById(obj+hh).className=obj+"_on";
+    document.getElementById(obj+hh+hh).style.display="";
+    console.log(kw);
+     //
+    $.post(
+      url,
+      {kw:kw},
+      function(data){
+        console.log(data);
+        console.log(data.length);
+        //for(var i in data){}
+      },
+    'json');
+  }*/
+
+  function changArea(obj,kw,page,action){
+    var url = "<?php echo site_url('store/postSearch');?>";
+    var baseurl = "<?php echo site_url('store/single');?>"+"/sid/";
+    if(action == 0){
+      $("#List1 ul p").each(function(index,value){
+        //console.log(index);
+        $("#List1 ul p").eq(index).attr('class','jj_off');
+      });
+      $("#List2 ul p").each(function(index,value){
+      //console.log(index);
+      $("#List2 ul p").eq(index).attr('class','jj_off');
+    });
+      $(obj).find('p').attr('class','jj_on');
+    }    
+    //
+    $("#jj11 ul").html('<div style="text-align: center;color: red;margin-top: 200px;font-size: 16px;">数据加载中，稍等……如果太久没反应，请您重新点击一次！</div>');
+    //
+    $.post(
+      url,
+      {kw:kw,page:page},
+      function(data){
+        //console.log(data);            
+        if(data.storelist.length > 0){
+          $("#jj11 ul").html('');
+          for(var i in data.storelist){
+            //console.log(data.storelist[i]);
+            var st = data.storelist[i];
+            var oh = add0(st.openHour);
+            var om = add0(st.openMinute);
+            var ch = add0(st.closeHour);
+            var cm = add0(st.closeHour);
+            html = "<li><div class='iimg'><a href='"+baseurl+st.storeId+"'><img src='<?php echo base_url().MIMG;?>2_10.jpg' ></a></div><div class='iimg1'><h1><a href='"+baseurl+st.storeId+"'>"+st.name+"</a></h1><p>"+st.address+"</br>营业时间"+oh+":"+om+"-"+ch+":"+cm+"</br>"+st.distanceDescription+"&nbsp;&nbsp;"+st.sendDescription+"&nbsp;&nbsp;距约"+(st.aboutDistance/1000)+"公里</p></div><div class='iimg2'>"+st.sendPrice+"元起送<img src='<?php echo base_url().MIMG;?>2_13.png' ><a href='"+baseurl+st.storeId+"'>进入超市</a></div></li>";
+            $(html).appendTo("#jj11 ul");            
+          }
+          if(data.haspage == 0 && data.page == 1){
+            $(".m-page").html('<ul  class="page-one-ul"><li>当前只有一页</li></ul>');
+          }else{
+            pagehtml = '<ul class="clearfix ml400 page-ul">';
+
+            if(data.page == 1){
+              pagehtml += "<li><a>1</a></li><li><a href='javascript:;' onclick='loadPage("+kw+",2)'>2</a></li>";
+            }else if(data.page > 1 && data.page < 6){
+              pagehtml += "<li><a href='javascript:;' onclick='loadPage("+kw+","+(data.page-1)+")'>上一页</a></li>";
+              for(var i=0;i<=data.page;i++){               
+                if(i!=data.page)
+                  pagehtml += "<li><a href='javascript:;' onclick='loadPage("+kw+","+i+")'>"+i+"</a></li>";
+                else
+                  pagehtml += "<li><a>"+i+"</a></li>";
+              }      
+            }else{
+              pagehtml += "<li><a href='javascript:;' onclick='loadPage("+kw+","+(data.page-1)+")'>上一页</a></li><li>...</li>";
+              for(var i=(data.page-4);i<data.page;i++){
+                pagehtml += "<li><a href='javascript:;' onclick='loadPage("+kw+","+i+")'>"+i+"</a></li>";
+              } 
+              pagehtml += "<li><a>"+data.page+"</a></li>";             
+            }
+            if(data.haspage == 1)
+              pagehtml += "<li>...</li><li><a href='javascript:;' onclick='loadPage("+kw+","+(data.page+1)+")'>下一页</a></li>";
+            pagehtml += "</ul>";
+            $(".m-page").html(pagehtml);
+          }
+        }else{
+          $("#jj11 ul").html('<div style="text-align: center;color: red;margin-top: 200px;font-size: 16px;">很抱歉，没有您要的搜索结果！</div>');
+        }
+      },
+    'json');
+    //console.log(kw);
+  }
+
+  //
+  function loadPage(kw,page){
+    changArea(this,kw,page,1);
+  }
+
+  //十位数补零
+  function add0(num){
+    if(num < 10)
+      return '0'+num;
+    else
+      return num;
   }
   </script>
     <div class="logo-r-M">
@@ -77,12 +170,12 @@ function query(name, value){
         <div class="ScrCont">
           <div id="List1">
             <ul>
-            <li class="bs" onclick="change_con('jj',6,1)"><p class="jj_on" id="jj1" ><span>宝山</span></p></li>
-            <li class="pd" onclick="change_con('jj',6,2)"><p class="jj_off" id="jj2" ><span>浦东</span></p></li>
-            <li class="hk" onclick="change_con('jj',6,3)"><p class="jj_off" id="jj3" ><span>虹口</span></p></li>
-            <li class="xh" onclick="change_con('jj',6,4)"><p class="jj_off" id="jj4" ><span>徐汇</span></p></li>
-            <li class="cn" onclick="change_con('jj',6,5)"><p class="jj_off" id="jj5" ><span>长宁</span></p></li>
-            <li class="yp" onclick="change_con('jj',6,6)"><p class="jj_off" id="jj6" ><span>杨浦</span></p></li>
+              <li class="yp" onclick="changArea(this,'杨浦区',1,0)"><p class="jj_off" id="jj6" ><span>杨浦</span></p></li>
+              <li class="bs" onclick="changArea(this,'宝山区',1,0)"><p class="jj_off" id="jj1" ><span>宝山</span></p></li>
+              <li class="pd" onclick="changArea(this,'浦东区',1,0)"><p class="jj_off" id="jj2" ><span>浦东</span></p></li>
+              <li class="hk" onclick="changArea(this,'虹口区',1,0)"><p class="jj_off" id="jj3" ><span>虹口</span></p></li>
+              <li class="xh" onclick="changArea(this,'徐汇区',1,0)"><p class="jj_off" id="jj4" ><span>徐汇</span></p></li>
+              <li class="cn" onclick="changArea(this,'长宁区',1,0)"><p class="jj_off" id="jj5" ><span>长宁</span></p></li>            
             </ul>
           </div>
           <div id="List2"></div>
@@ -91,7 +184,7 @@ function query(name, value){
     </div> 
     <div class="logo-r-R"onmousedown="ISL_GoDown()" onMouseUp="ISL_StopDown()" onMouseOut="ISL_StopDown()"></div>
   </div> 
-  <script type="text/javascript" src="styles/js/nav.js" charset="utf-8"></script>
+  <script type="text/javascript" src="<?php echo base_url().MJS;?>nav.js" charset="utf-8"></script>
 </div> 
 <script type="text/javascript">
   function search(){
@@ -100,7 +193,7 @@ function query(name, value){
     if(kw == '请输入您所在的小区地址' || kw == '')
       return false;
     else{
-      var gourl = "<?php echo site_url('store/search');?>"+'/'+decodeURIComponent(kw);
+      var gourl = "<?php echo site_url('store/search');?>"+'/keyword/'+decodeURIComponent(kw);
       window.location.href = gourl;        
     }       
    
@@ -120,68 +213,50 @@ function query(name, value){
   </div> 
 
 
-<div class="ditu-sou"id="jj11" >
-  <?php if($keyword == '商店'){ ?>
-<ul>
-  <?php for($i=0;$i<7;$i++){?>
-  <li><div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村231号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
-  </li>
-  <?php }?>
-
-</ul>
-</div>
-<div class="ditu-sou"id="jj22" style="display:none">
-<ul>
-  <?php for($i=0;$i<7;$i++){?>
-  <li><div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村232号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
-
-  </li>
-  <?php }?>
-</ul>
+  <div class="ditu-sou clearfix" id="jj11" >    
+    <ul>
+    <?php if(!empty($stores)): ?>
+      <?php if(!empty($stores['storelist'])):foreach($stores['storelist'] as $st): $st = get_object_vars($st);?>
+      <li><div class="iimg"><a href="<?php echo site_url('store/single').'/sid/'.$st['storeId'];?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single').'/sid/'.$st['storeId'];?>"><?php echo $st['name'];?></a></h1><p><?php echo $st['address'];?></br>营业时间<?php printf('%02d:%02d-%02d:%02d', $st['openHour'],$st['openMinute'],$st['closeHour'],$st['closeMinute']);?></br><?php echo $st['distanceDescription'].'&nbsp;&nbsp;'.$st['sendDescription'].'&nbsp;&nbsp;距约'.($st['aboutDistance']/1000).'公里';?></p></div><div class="iimg2"><?php echo $st['sendPrice'];?>元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single').'/sid/'.$st['storeId'];?>">进入超市</a></div>
+      </li>
+      <?php endforeach;else:?>
+       <div style="text-align: center;color: red;margin-top: 200px;font-size: 16px;">很抱歉，没有您要的搜索结果！</div>
+    <?php endif;endif;?>
+    </ul>
+  </div>
 </div>
 
-<div class="ditu-sou"id="jj33" style="display:none">
-<ul>
-  <?php for($i=0;$i<7;$i++){?>
-  <li>
-    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村233号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
-  </li>
+<!--分页--> 
+  <div class="m-page">
+  <?php if($haspage == 0 && $page == 1){?>
+    <ul  class="page-one-ul"><li>当前只有一页</li></ul>
+  <?php }else{?>
+    <ul class="clearfix ml400 page-ul">
+    <?php if($page == 1){?>   
+      <li><a>1</a></li>
+      <li><a href="<?php echo $url.'/page/'.($page+1);?>">2</a></li>    
+    <?php }elseif($page >1 && $page < 6){?>
+      <li><a  href="<?php echo $url.'/page/'.($page-1);?>">上一页</a></li> 
+      <?php for($i=1;$i<=$page;$i++){?>
+      <?php if($i!=$page){?>  
+      <li><a href="<?php echo $url.'/page/'.($i);?>"><?php echo $i;?></a></li>    
+      <?php }else{?>
+      <li><a><?php echo $i;?></a></li>
+      <?php }}?>        
+    <?php }else{?>
+      <li><a  href="<?php echo $url.'/page/'.($page-1);?>">上一页</a></li>
+      <li>...</li>  
+      <?php for($i=($page-4);$i<$page;$i++){?>      
+      <li><a href="<?php echo $url.'/page/'.($i);?>"><?php echo $i;?></a></li>
+      <?php }?>
+      <li><a><?php echo $page;?></a></li>         
+    <?php }?>
+    <?php if($haspage == 1){?>
+      <li>...</li>
+      <li><a href="<?php echo $url.'/page/'.($page+1);?>">下一页</a></li>
+    <?php }?>
+    </ul>
   <?php }?>
-
-</ul>
-</div>
-<div class="ditu-sou"id="jj44" style="display:none">
-<ul>
-  <?php for($i=0;$i<7;$i++){?>
-  <li>
-    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村234号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
-  </li>
-  <?php }?>
-</ul>
-</div>
-<div class="ditu-sou"id="jj55" style="display:none">
-<ul>
-<?php for($i=0;$i<7;$i++){?>
-  <li>
-    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村235号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
-  </li>
-  <?php }?>
-</ul>
-</div>
-<div class="ditu-sou"id="jj66" style="display:none">
-<ul>
-<?php for($i=0;$i<7;$i++){?>
-  <li>
-    <div class="iimg"><a href="<?php echo site_url('store/single');?>"><img src="<?php echo base_url().MIMG;?>2_10.jpg" ></a></div><div class="iimg1"><h1><a href="<?php echo site_url('store/single');?>">比邻便利超市</a></h1><p>普陀曹杨路曹杨2村236号</br>营业时间10:00-22:00</br>1000米内30分钟送到</p></div><div class="iimg2">30元起送<img src="<?php echo base_url().MIMG;?>2_13.png" ><a href="<?php echo site_url('store/single');?>">进入超市</a></div>
-  </li>
-  <?php }?>
-</ul>
-<?php }else{ ?>
-  <div style="text-align: center;color: red;margin-top: 200px;font-size: 16px;">很抱歉，没有您要的搜索结果！</div>
-<?php }?>
-</div>
-
-</div>
-
+  </div>
 
 <?php $this->load->view('_footer.html');?>

@@ -8,18 +8,30 @@ class Store extends CI_Controller {
 	}
 
 	public function index(){	
-		$postdata = array(
-			"lng" => 121.38842553522,
-		    "lat" => 31.202108422061,
-			"distance" => 18.5,
-			"name" => "便利店",
-		    "nowPage" => 1,
-		    "pageCount" => 25
-			);		
-		$rs = $this->yike->getStoreList($postdata);		
-		
-		//prpre($rs);exit;
-		$this->load->view("index_search.html");
+		# 百度地图API
+		# 百度秘钥
+		$bdak = "60bf165313012a145956b885f5f30d9a";
+		$address = urlencode('杨浦区');  //"御青路328弄60"
+		$city = urlencode("上海市");		
+		$bdurl = "http://api.map.baidu.com/geocoder/v2/?ak=".$bdak."&output=json&address=".$address."&city=".$city;
+		$bddata = $this->curlGetData($bdurl);
+		//$bddata = json_decode($bdjson, true);
+		//prpre($bddata);exit;
+		if(empty($bddata['result'])){
+			$data['stores'] = array();			
+			$this->load->view("index_search.html", $data);
+		}else{
+			$postdata = array(
+				"lng" => $bddata['result']['location']['lng'],
+			    "lat" => $bddata['result']['location']['lat'],
+				"distance" => 18.5,
+				"name" => "",
+			    "nowPage" => 1,
+			    "pageCount" => 25
+				);		
+			$data['stores'] = $this->yike->getStoreList($postdata);				
+			$this->load->view("index_search.html", $data);
+		}			
 	}
 
 	/**
@@ -190,10 +202,44 @@ class Store extends CI_Controller {
 	/**
 	 * 商店搜索
 	 */
-	public function search($kw = ''){		
-		$data['keyword'] = urldecode($kw);
-		
-		$this->load->view("store_search.html", $data);
+	public function search($kw = ''){			
+		$segments = $this->uri->uri_to_assoc();
+		$data['keyword'] = urldecode($segments['keyword']);
+		#page
+		$page = isset($segments['page']) ? (int)$segments['page'] : 1;	
+		//每页显示数量
+		$pagecount = 25;
+		$data['page'] = $page;	
+		$data['url'] = site_url('store/search').'/keyword/'.$segments['keyword'];
+		$data['haspage'] = 1;
+		# 百度地图API
+		# 百度秘钥
+		$bdak = "60bf165313012a145956b885f5f30d9a";
+		$address = urlencode($data['keyword']);  //"御青路328弄60"
+		$city = urlencode("上海市");		
+		$bdurl = "http://api.map.baidu.com/geocoder/v2/?ak=".$bdak."&output=json&address=".$address."&city=".$city;
+		$bddata = $this->curlGetData($bdurl);
+		//$bddata = json_decode($bdjson, true);
+		//prpre($bddata);exit;
+		if(empty($bddata['result'])){
+			$data['stores'] = array();
+			$data['haspage'] = 0;
+			$this->load->view("store_search.html", $data);
+		}else{
+			$postdata = array(
+				"lng" => $bddata['result']['location']['lng'],
+			    "lat" => $bddata['result']['location']['lat'],
+				"distance" => 18.5,
+				"name" => "",
+			    "nowPage" => $page,
+			    "pageCount" => $pagecount
+				);		
+			$data['stores'] = $this->yike->getStoreList($postdata);		
+			if($data['stores']['totalCount'] <= ($page * $pagecount))
+				$data['haspage'] = 0;
+			//prpre($data['stores']);exit;
+			$this->load->view("store_search.html", $data);
+		}		
 	}
 
 	/**
@@ -211,5 +257,55 @@ class Store extends CI_Controller {
 		    "pageCount" => 25
 			);
 		$ptl['goods'] = $this->yike->getProductList($postdata);
+	}
+
+	/**
+	 * post商店搜索
+	 */
+	public function postSearch(){	
+		//echo 1;exit;	
+		$kw = trim($this->input->post('kw'));
+		//$kw = '杨浦区';
+		$page = $this->input->post('page') ? (int)$this->input->post('page') : 1;
+		# 分页信息
+		$pagecount = 25;
+		$backdata['haspage'] = 1;
+		
+		# 百度地图API
+		# 百度秘钥
+		$bdak = "60bf165313012a145956b885f5f30d9a";
+		$address = urlencode($kw);  //"御青路328弄60"
+		$city = urlencode("上海市");		
+		$bdurl = "http://api.map.baidu.com/geocoder/v2/?ak=".$bdak."&output=json&address=".$address."&city=".$city;
+		$bddata = $this->curlGetData($bdurl);
+		//$bddata = json_decode($bdjson, true);
+		//prpre($bddata);exit;
+		
+		$postdata = array(
+			"lng" => $bddata['result']['location']['lng'],
+		    "lat" => $bddata['result']['location']['lat'],
+			"distance" => 18.5,
+			"name" => "",
+		    "nowPage" => $page,
+		    "pageCount" => $pagecount
+			);		
+		$stores = $this->yike->getStoreList($postdata);	
+		if($stores['totalCount'] <= ($page * $pagecount))
+			$backdata['haspage'] = 0;
+		$backdata['page'] = $page;
+		$backdata['storelist'] = $stores['storelist'];		
+		//prpre($stores);prpre($backdata);	
+		echo json_encode($backdata, true);
+			
+	}
+
+	/*******************/
+	private function curlGetData($url){
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$rs = curl_exec($ch);
+		curl_close($ch);
+		return json_decode($rs, true);
 	}
 }
